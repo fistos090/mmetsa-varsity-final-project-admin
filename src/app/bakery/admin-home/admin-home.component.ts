@@ -20,22 +20,22 @@ export class AdminHomeComponent implements OnInit {
     showErrors = false;
     formErrors = {
         productName: {
-            required:''
+            required:'Product name is required'
         },
         category: {
-            required:''
+            required:'Category is required'
         },
         productDesc: {
-            required:''
+            required:'Product description is required'
         },
         price: {
-            required:''
+            required:'Please provide product price'
         },
         quantity: {
-            required:''
+            required:'Provide number of products to add'
         },
         prodImage: {
-            required:''
+            required:'Product picture must be uploaded'
         }
     };
   
@@ -119,6 +119,7 @@ export class AdminHomeComponent implements OnInit {
     }
 
     onAddProductClick() {
+        this.onSubmit();
         if (this.addProductForm.valid) {
 
             let requestData = {
@@ -128,9 +129,12 @@ export class AdminHomeComponent implements OnInit {
             }
             this.httpClient.post('/BAKERY/loadNewProduct', requestData).subscribe(
                 response => {
+                    this.addProductForm.patchValue(undefined);
+                    alert(response['message'])
                     console.log('*********',response);
                 },
                 error => {
+                    alert(error['message'])
                     console.log('*********',error);
                 }
             );
