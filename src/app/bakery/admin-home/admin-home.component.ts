@@ -129,13 +129,24 @@ export class AdminHomeComponent implements OnInit {
             }
             this.httpClient.post('/BAKERY/loadNewProduct', requestData).subscribe(
                 response => {
-                    this.image = undefined;
-                    this.addProductForm.patchValue(undefined);
+
+                    if (response['status'] == 'CREATED') {
+                        this.image = undefined;
+                        this.addProductForm.patchValue({
+                            productName: '',
+                            category: '',
+                            productDesc: '',
+                            price: '',
+                            quantity: '',
+                            prodImage: ''
+                        });
+                    }
+ 
                     alert(response['message'])
                     console.log('*********',response);
                 },
                 error => {
-                    alert(error['message'])
+                    // alert(error['message'])
                     console.log('*********',error);
                 }
             );
