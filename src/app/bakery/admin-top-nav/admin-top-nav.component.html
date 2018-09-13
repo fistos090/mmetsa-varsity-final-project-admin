@@ -1,0 +1,9 @@
+<div class="top-nav">
+  <span class="logo" (click)="loadHome()"></span>
+  <div class="top-nav-actions">
+    <span class="act" *ngIf="logonUserName"><span class="fa fa-user-circle"></span> {{logonUserName}}</span>
+    <span class="act" *ngIf="logonUserName" (click)="logout()"><span class="fa fa-sign-out" ></span> Logout</span>
+    <span class="act" *ngIf="!logonUserName" [routerLink]="'/admin-login'"><span class="fa fa-sign-in"></span> Login</span>
+
+  </div>
+</div>

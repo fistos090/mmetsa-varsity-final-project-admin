@@ -1,0 +1,17 @@
+.login {
+    padding-top: 7%
+}
+
+.login-form-sec {
+    border: solid 0.5px #8888;
+    box-shadow: 0px 1px 2px 2px #8888;
+    margin: auto;
+    width: 460px;
+    min-height: 300px;
+    padding: 17px;
+    background-color: white;
+}
+
+.login-form-sec h4 {
+    display: inline-block;
+}

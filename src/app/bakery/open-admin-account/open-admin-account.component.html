@@ -1,0 +1,120 @@
+<div class="login-register-back">
+
+  <div class="register">
+
+    <div class="register-form-sec">
+      <h4>Open sytem administrator account</h4>
+      <div class="dropdown dropleft" style="float: right;">
+        <span [ngClass]="{
+        'fa': true, 
+        'fa-chevron-down': !dropdownIsOpen, 
+        'fa-chevron-up': dropdownIsOpen, 
+        'dropdown-toggle': true
+      }"
+          style="float: right;cursor: pointer;" data-toggle="dropdown" (click)="dropdownIsOpen = !dropdownIsOpen"></span>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" [routerLink]="'/admin-login'" (click)="dropdownIsOpen = !dropdownIsOpen" style="padding: 5px;">
+            <span class="fa fa-sign-in"> </span> Login
+          </a>
+        </div>
+      </div>
+      <hr style="margin-bottom: 0px">
+      <div class="image-sec">
+        <img [src]="image" alt="" height="128" width="150">
+        <input type="file" title="Select account picture" value="Select account picture" (change)="uploadImage($event)">
+      </div>
+      <hr style="margin-top: 0px">
+      <form [formGroup]="registerForm">
+        <div class="row">
+          <div class="col-md-12">
+            <app-input-field [data]="{
+                    label: 'First name',
+                    placeholder : 'e.g. Mmetsa Julliet',
+                    type: 'text',
+                    name: 'firstname',
+                    maxLength: 30
+                    }"
+              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+            </app-input-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <app-input-field [data]="{
+                    label: 'Last name',
+                    placeholder : 'e.g. Moloto',
+                    type: 'text',
+                    name: 'lastname',
+                    maxLength: 40
+                    }"
+              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+            </app-input-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <app-input-field [data]="{
+            label: 'Email',
+            placeholder : 'e.g. user@mm2.co.za',
+            type: 'email',
+            name: 'email',
+            maxLength: 40
+            }"
+              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+            </app-input-field>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <app-input-field [data]="{
+                        label: 'Password',
+                        placeholder : 'e.g. User@123 : This is just an example',
+                        type: 'password',
+                        name: 'password',
+                        maxLength: 50
+                        }"
+              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+            </app-input-field>
+          </div>
+          <div class="col-md-6">
+            <app-input-field [data]="{
+                        label: 'Confirm password',
+                        placeholder : 'User@123 : This is just an example',
+                        type: 'password',
+                        name: 'confirmPassword',
+                        maxLength: 50
+                        }"
+              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+            </app-input-field>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-md-12">
+            <app-input-field [data]="{
+            label: 'System Security Access Code (SSAC) *',
+            placeholder : '',
+            type: 'password',
+            name: 'ssacode',
+            maxLength: 50
+            }"
+              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+            </app-input-field>
+          </div>
+        </div>
+
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <button class="btn  btn-light" style="width: 100%; height: 45px;" (click)="onRegisterClick()"> <span class="fa fa-user-circle"></span>
+              Create account</button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>

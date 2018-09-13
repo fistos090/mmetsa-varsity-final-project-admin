@@ -1,0 +1,34 @@
+.register {
+    padding: 1% 0%;
+}
+
+.register-form-sec {
+    border: solid 0.5px #8888;
+    box-shadow: 0px 1px 2px 2px #8888;
+    margin: auto;
+    width: 600px;
+    padding: 17px;
+    background-color: white;
+}
+
+.register-form-sec h4 {
+    display: inline-block;
+}
+
+.image-sec {
+    height: 155px;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+}
+
+.image-sec img {
+    width: 150px;
+    height: 128px;
+    padding: 2px;
+
+    /* margin-left: 132px; */
+}
+
+.image-sec input {
+    margin: 2px;
+}

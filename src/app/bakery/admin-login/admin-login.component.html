@@ -1,0 +1,67 @@
+<div class="login-register-back">
+  <div class="login">
+
+    <div class="login-form-sec">
+      <h4>Administrator login</h4>
+      <div class="dropdown dropleft" style="float: right;">
+        <span [ngClass]="{
+        'fa': true, 
+        'fa-chevron-down': !dropdownIsOpen, 
+        'fa-chevron-up': dropdownIsOpen, 
+        'dropdown-toggle': true
+      }"
+          style="float: right;cursor: pointer;" data-toggle="dropdown" (click)="dropdownIsOpen = !dropdownIsOpen"></span>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" [routerLink]="'/open-admin-account'" (click)="dropdownIsOpen = !dropdownIsOpen"
+            style="padding: 5px;">
+            <span style="width: 20px" class="fa fa-user-plus"></span> Open account
+          </a> <br>
+          <a href="" style="padding: 5px;">
+            <span style="width: 20px" class="fa fa-lock"></span> Forgot password
+          </a>
+        </div>
+      </div>
+      <hr>
+      <form [formGroup]="loginForm">
+        <div class="row">
+          <div class="col-md-12">
+            <app-input-field [data]="{
+            label: 'Email',
+            placeholder : 'e.g. user@mm2.co.za',
+            type: 'email',
+            name: 'email',
+            maxLength: 40
+            }"
+              [showErrors]="showErrors" [parentFormGroup]="loginForm" [formControlErrorMessage]="formControlErrorMessage">
+            </app-input-field>
+          </div>
+
+        </div>
+        <div class="row">
+
+          <div class="col-md-12">
+            <app-input-field [data]="{
+            label: 'Password',
+            placeholder : 'e.g. User@1234 : This is just an example',
+            type: 'password',
+            name: 'password',
+            maxLength: 50
+            }"
+              [showErrors]="showErrors" [parentFormGroup]="loginForm" [formControlErrorMessage]="formControlErrorMessage">
+            </app-input-field>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <button class="btn  btn-light" style="width: 100%; height: 45px;" (click)="onLoginClick()"> <span class="fa fa-sign-in"></span>
+              Login</button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>

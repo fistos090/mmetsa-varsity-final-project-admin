@@ -1,0 +1,49 @@
+/* You can add global styles to this file, and also import other style files */
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.logo{
+    background-image: url(assets/sys-images/bakery-logo.JPG);
+    background-repeat: no-repeat;
+    background-size: 143px 62px;
+    padding: 2px 134px 42px 10px;
+    cursor: pointer;
+}
+
+.login-register-back{
+    background-image: url(assets/sys-images/Etchea-Background.v2.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    /* background-size: 143px 62px;
+    padding: 2px 134px 42px 10px; */
+}
+
+.loader {
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid rgb(163, 34, 124);;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+.custom-dialog-container .mat-dialog-container {
+    background-color: transparent;
+    box-shadow: inherit;
+    /* padding: 0px; */
+}
