@@ -132,14 +132,7 @@ export class AdminHomeComponent implements OnInit {
 
                     if (response['status'] == 'CREATED') {
                         this.image = undefined;
-                        this.addProductForm.patchValue({
-                            productName: '',
-                            category: '',
-                            productDesc: '',
-                            price: '',
-                            quantity: '',
-                            prodImage: ''
-                        });
+                        this.addProductForm.reset();
                     }
  
                     alert(response['message'])
