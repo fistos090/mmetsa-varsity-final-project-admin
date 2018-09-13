@@ -129,6 +129,7 @@ export class AdminHomeComponent implements OnInit {
             }
             this.httpClient.post('/BAKERY/loadNewProduct', requestData).subscribe(
                 response => {
+                    this.image = undefined;
                     this.addProductForm.patchValue(undefined);
                     alert(response['message'])
                     console.log('*********',response);
