@@ -20,19 +20,23 @@ export class AdminHomeComponent implements OnInit {
     showErrors = false;
     formErrors = {
         productName: {
-            required:'Product name is required'
+            required:'Product name is required',
+            pattern: 'Provide a valid product name'
         },
         category: {
-            required:'Category is required'
+            required:'Category is required',
         },
         productDesc: {
-            required:'Product description is required'
+            required:'Product description is required',
+            pattern: 'Only letters are allowed in field' 
         },
         price: {
-            required:'Please provide product price'
+            required:'Please provide product price',
+            pattern: 'only numbers are allowed'
         },
         quantity: {
-            required:'Provide number of products to add'
+            required:'Provide number of products to add',
+            pattern: 'only numbers are allowed'
         },
         prodImage: {
             required:'Product picture must be uploaded'
@@ -68,12 +72,15 @@ export class AdminHomeComponent implements OnInit {
 
     openAddProductForm() {
         this.addProductForm = this.formBuilder.group({
-            productName: ['', [Validators.required]],
+            productName: ['', [Validators.required, Validators.pattern(/^(?![ ]+$)[a-zA-Z ]+$/)]],
             category: ['', [Validators.required]],
-            productDesc: ['', [Validators.required]],
-            price: ['', [Validators.required]],
-            quantity: ['', [Validators.required]],
+            productDesc: ['', [Validators.required, Validators.pattern(/^(?![ ]+$)[a-zA-Z ]+$/)]],
+            price: ['', [Validators.required, Validators.pattern(/^(?![ ]+$)[0-9 ]+$/)]],
+            quantity: ['', [Validators.required, Validators.pattern(/^(?![ ]+$)[0-9 ]+$/)]],
             prodImage: ['', [Validators.required]]
+        });
+        this.addProductForm.statusChanges.subscribe(val => {
+            this.onSubmit();
         })
     }
 
@@ -86,7 +93,7 @@ export class AdminHomeComponent implements OnInit {
             for (const errorKey in form.controls[control].errors) {
               if (!this.formControlErrorMessage[control] ||
                 this.formControlErrorMessage[control] !== this.formErrors[control][errorKey]) {
-                console.log(errorKey + ' ' + this.formErrors[control][errorKey])
+                
                 this.formControlErrorMessage[control] = this.formErrors[control][errorKey];
               }
             }
@@ -114,11 +121,16 @@ export class AdminHomeComponent implements OnInit {
         fileReader.onloadend = function(ev) {
             this.image = fileReader.result;
             this.addProductForm.controls['prodImage'].setValue(this.image);
+            if (this.addProductForm.controls['prodImage'].valid) {
+                this.formControlErrorMessage['prodImage'] = undefined;
+            }
+            
         }.bind(this)
 
     }
 
     onAddProductClick() {
+        this.showErrors = true;
         this.onSubmit();
         if (this.addProductForm.valid) {
 

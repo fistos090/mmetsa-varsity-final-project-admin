@@ -84,3 +84,8 @@ i{
 h3{
     margin-bottom: 40px;
 }
+
+.image-validation-error{
+    color:rgba(243, 23, 0, 0.5);
+    border: 0.5px solid rgba(243, 23, 0, 0.5);;
+}
