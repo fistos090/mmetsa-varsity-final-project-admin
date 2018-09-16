@@ -7,139 +7,89 @@
 </div> -->
 
 <div class="home">
-    <h3>Welcome to bakery administration portal</h3>
+    <div class="page-header">
+        <h3>Welcome to bakery administration portal</h3>
+    </div>
+
     <div class="side-nav col-md-3">
         <div class="nav-item">
             <span id="title" (click)="expandNavItem('id1')">
-                Manage products
+                <i class="fa fa-gears"></i> Manage products
                 <span class="fa {{navItems[0].status ? 'fa-chevron-up' : 'fa-chevron-down'}} chevron-area"></span>
             </span>
             <hr *ngIf="navItems[0].status">
             <div *ngIf="navItems[0].status" class="sub-nav-item">
-                <span> <i class="fa fa-home"></i> CHP products</span>
-                <span> <i class="fa fa-plus-circle"></i> Add new product</span>
-                <span> <i class="fa fa-eye"></i> View shop products</span>
+                <span [ngClass]="{'active': isCHP}" (click)="processAction('isCHP')"> <i class="fa fa-home"></i> CHP
+                    products</span>
+                <span [ngClass]="{'active': isAddNewProduct}" (click)="processAction('isAddNewProduct')"> <i class="fa fa-plus-circle"></i>
+                    Add new product</span>
+                <span [ngClass]="{'active': isAllShopProducts}" (click)="processAction('isAllShopProducts')"> <i class="fa fa-eye"></i>
+                    View shop products</span>
             </div>
         </div>
         <div class="nav-item">
             <span id="title" (click)="expandNavItem('id2')">
-                Manage orders <span class="fa {{navItems[1].status ? 'fa-chevron-up' : 'fa-chevron-down'}} chevron-area"></span>
+                <i class="fa fa-gears"></i> Manage orders <span class="fa {{navItems[1].status ? 'fa-chevron-up' : 'fa-chevron-down'}} chevron-area"></span>
             </span>
             <hr *ngIf="navItems[1].status">
             <div *ngIf="navItems[1].status" class="sub-nav-item">
-                <span> <i class="fa fa-eye"></i> View all orders</span>
+                <span [ngClass]="{'active': isAllOrders}" (click)="processAction('isAllOrders')"> <i class="fa fa-eye"></i>
+                    View all orders</span>
             </div>
         </div>
-        <div class="nav-item" (click)="expandNavItem('id3')">
-            <span id="title">
-                Manage customers <span class="fa {{navItems[2].status ? 'fa-chevron-up' : 'fa-chevron-down'}} chevron-area"></span>
+        <div class="nav-item">
+            <span id="title" (click)="expandNavItem('id3')">
+                <i class="fa fa-gears"></i> Manage customers <span class="fa {{navItems[2].status ? 'fa-chevron-up' : 'fa-chevron-down'}} chevron-area"></span>
             </span>
             <hr *ngIf="navItems[2].status">
             <div *ngIf="navItems[2].status" class="sub-nav-item">
-                <span><i class="fa fa-eye"></i> View all customers</span>
+                <span [ngClass]="{'active': isAllRegisteredCustomer}" (click)="processAction('isAllRegisteredCustomer')"><i
+                        class="fa fa-eye"></i> View all customers</span>
             </div>
         </div>
 
     </div>
-    <div class="administration-area col-md-8">
-        <h4>Add new product</h4>
+    <!-- Add new product -->
+    <div [hidden]="!isAddNewProduct" class="administration-area col-md-8">
+        <h4> <i class="fa fa-plus-circle"></i> Add new product</h4>
         <hr style="margin-top: 0px">
+        <add-product-form></add-product-form>
+    </div>
 
-        <div class="add-product-area">
-            <form [formGroup]="addProductForm">
-                <div class="row">
-                    <div class="col-md-12">
-                        <app-input-field [data]="{
-                              label: 'Product name',
-                              placeholder : 'e.g. Marula Cake',
-                              type: 'text',
-                              name: 'productName',
-                              maxLength: 30
-                              }"
-                            [showErrors]="showErrors" [parentFormGroup]="addProductForm" [formControlErrorMessage]="formControlErrorMessage">
-                        </app-input-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <app-input-field [data]="{
-                              label: 'Product category',
-                              placeholder : 'e.g. Cakes',
-                              type: 'text',
-                              name: 'category',
-                              maxLength: 40
-                              }"
-                            [showErrors]="showErrors" [parentFormGroup]="addProductForm" [formControlErrorMessage]="formControlErrorMessage">
-                        </app-input-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <app-input-field [data]="{
-                      label: 'Product description',
-                      placeholder : 'e.g. Reddish brown cake',
-                      type: 'text',
-                      name: 'productDesc',
-                      maxLength: 40
-                      }"
-                            [showErrors]="showErrors" [parentFormGroup]="addProductForm" [formControlErrorMessage]="formControlErrorMessage">
-                        </app-input-field>
-                    </div>
+    <!-- Manage customer web home page products -->
+    <div *ngIf="isCHP" class="administration-area col-md-8">
+        <h4> <i class="fa fa-plus-circle"></i> Manage customer home page products</h4>
+        <hr style="margin-top: 0px">
+        <div>
 
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <app-input-field [data]="{
-                      label: 'Product price',
-                      placeholder : 'e.g. 200.54',
-                      type: 'text',
-                      name: 'price',
-                      maxLength: 50
-                      }"
-                            [showErrors]="showErrors" [parentFormGroup]="addProductForm" [formControlErrorMessage]="formControlErrorMessage">
-                        </app-input-field>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <app-input-field [data]="{
-                          label: 'Product stock quantity',
-                          placeholder : 'e.g. 75',
-                          type: 'text',
-                          name: 'quantity',
-                          maxLength: 50
-                          }"
-                            [showErrors]="showErrors" [parentFormGroup]="addProductForm" [formControlErrorMessage]="formControlErrorMessage">
-                        </app-input-field>
-                    </div>
-                </div>
-
-                <br>
-                <div class="row">
-                    <div class="col-md-12">
-                        <button class="btn  btn-light" style="width: 100%; height: 45px;" (click)="onAddProductClick()">
-                            <span class="fa fa-user-circle"></span> Add new product
-                        </button>
-                    </div>
-                </div>
-
-            </form>
-            <br>
-        </div>
-        <div [ngClass]="{'image-validation-error': formControlErrorMessage['prodImage']}" style="width: 180px; min-height: 180px; margin-top: 20px; border: solid #88888888 0.5px; float: right; padding: 5px">
-            <div style="height: 120px;width: 170px">
-                <img *ngIf="image" [src]="image" alt="" height="120px" width="170px">
-            </div>
-            <hr style="margin: 5px">
-            <button class="btn  btn-light" style="width: 100%; height: 35px;">
-                <input type="file" accept=".jpeg,.png,.jpg" (change)="uploadImage($event)" style="height: 25px; width: 150px; position: absolute; z-index: 2; opacity: 0;"> 
-                <span class="fa fa-upload"></span> Upload product pic
-            </button>
-            <div  *ngIf="formControlErrorMessage['prodImage']">
-                {{formControlErrorMessage['prodImage']}}
-            </div>
         </div>
     </div>
+
+    <div *ngIf="isAllShopProducts" class="administration-area col-md-8">
+        <h4> <i class="fa fa-eye"></i> View all shop products</h4>
+        <hr style="margin-top: 0px">
+        <view-shop-product 
+        [productWrapper]="productWrapper" 
+        [formOpenningEvent]="formOpenningEvent" 
+        [openFormId]="openFormId"
+        [itemId]="i"
+         *ngFor="let productWrapper of products; let i = index"></view-shop-product>
+    </div>
+
+    <div *ngIf="isAllRegisteredCustomer" class="administration-area col-md-8">
+        <h4> <i class="fa fa-plus-circle"></i> View all registered customers</h4>
+        <hr style="margin-top: 0px">
+        <div>
+
+        </div>
+    </div>
+
+    <div *ngIf="isAllOrders" class="administration-area col-md-8">
+        <h4> <i class="fa fa-plus-circle"></i> View all customer orders</h4>
+        <hr style="margin-top: 0px">
+        <div>
+
+        </div>
+    </div>
+
 </div>

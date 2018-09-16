@@ -26,6 +26,20 @@ export class CustomValidations {
     return { 'isValidCellCode': true };
   }
 
+  static isValidDecimalNumber(control: AbstractControl) {
+    if (control) {
+      if (control.value) {
+        const tokens = control.value.split('.');
+
+        if ( tokens[1].length == 2 ) {
+          return null;
+        }
+      }
+    }
+
+  return { 'isValidDecimalNumber': true };
+}
+
   static isValidEmailDomain(control: AbstractControl) {
     let occurences = 0;
     if (control) {

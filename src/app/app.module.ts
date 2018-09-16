@@ -18,6 +18,8 @@ import { AdminHomeComponent } from 'src/app/bakery/admin-home/admin-home.compone
 import { AdminTopNavComponent } from './bakery/admin-top-nav/admin-top-nav.component';
 import { SpinnerService } from 'src/app/bakery/common/service-spinner/spinner-service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { AddProductComponent } from 'src/app/bakery/admin-home/home-actions/add-product-form/add-product-form.componet';
+import { ViewShopProductComponent } from 'src/app/bakery/admin-home/home-actions/view-shop-product/view-shop-product.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AdminLoginComponent,
     OpenAdminAccountComponent,
     AdminHomeComponent,
-    AdminTopNavComponent
+    AdminTopNavComponent,
+    AddProductComponent,
+    ViewShopProductComponent
   ],
   imports: [
     BrowserModule,

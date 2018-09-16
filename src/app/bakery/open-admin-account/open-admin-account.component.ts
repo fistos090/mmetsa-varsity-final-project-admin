@@ -202,7 +202,7 @@ export class OpenAdminAccountComponent implements OnInit {
           'email': this.registerForm.get('email').value,
           'password': this.registerForm.get('password').value,
         }),
-        'encodedAdminImage': this.image,
+        'encodedAdminImage': 'this.image,lklklllklkl',
       })
 
       // this.spinner.showSpinner();

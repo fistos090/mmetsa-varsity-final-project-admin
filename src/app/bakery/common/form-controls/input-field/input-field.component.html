@@ -1,6 +1,6 @@
 <div [formGroup]="parentFormGroup" [ngClass]="{
   'invalid': showErrors && parentFormGroup.controls[data.name].invalid,
-  'control-dirty': true && !isFocused && parentFormGroup.controls[this.data.name].dirty
+  'control-dirty': parentFormGroup.controls[data.name].valid && !isFocused && parentFormGroup.controls[this.data.name].dirty
 }">
   <!-- <kendo-textbox-container floatingLabel="{{data.label}}"> -->
     <label [for]="data.name">{{data.label}}</label>

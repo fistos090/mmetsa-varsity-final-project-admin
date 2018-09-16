@@ -1,0 +1,162 @@
+<div *ngIf="isShowingAddForm" class="add-product-area">
+    <form [formGroup]="addProductForm">
+        <div class="row">
+            <div class="col-md-12">
+                <app-input-field [data]="{
+                          label: 'Product name',
+                          placeholder : 'e.g. Marula Cake',
+                          type: 'text',
+                          name: 'productName',
+                          maxLength: 30
+                          }"
+                    [showErrors]="showErrors" [parentFormGroup]="addProductForm" [formControlErrorMessage]="formControlErrorMessage">
+                </app-input-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <app-dropdown-list [data]="{
+                        placeholder: 'Select product category',
+                        label: 'Product category',
+                        name: 'category',
+                        options: [
+                            {label: 'Cakes', value: 'cakes'},
+                            {label: 'Biscuits', value: 'biscuits'},
+                            {label: 'Bread and Pastries', value: 'bread-pastries'},
+                            {label: 'Pizzas', value: 'pizzas'},
+                            {label: 'Muffins', value: 'muffins'}
+                        ]
+                    }"
+                    [showErrors]="showErrors" [parentFormGroup]="addProductForm" [formControlErrorMessage]="formControlErrorMessage">
+                </app-dropdown-list>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <app-input-field [data]="{
+                  label: 'Product description',
+                  placeholder : 'e.g. Reddish brown cake',
+                  type: 'text',
+                  name: 'productDesc',
+                  maxLength: 40
+                  }"
+                    [showErrors]="showErrors" [parentFormGroup]="addProductForm" [formControlErrorMessage]="formControlErrorMessage">
+                </app-input-field>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <app-input-field [data]="{
+                  label: 'Product price',
+                  placeholder : 'e.g. 200.54',
+                  type: 'text',
+                  name: 'price',
+                  maxLength: 50
+                  }"
+                    [showErrors]="showErrors" [parentFormGroup]="addProductForm" [formControlErrorMessage]="formControlErrorMessage">
+                </app-input-field>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <app-input-field [data]="{
+                      label: 'Product stock quantity',
+                      placeholder : 'e.g. 75',
+                      type: 'text',
+                      name: 'quantity',
+                      maxLength: 50
+                      }"
+                    [showErrors]="showErrors" [parentFormGroup]="addProductForm" [formControlErrorMessage]="formControlErrorMessage">
+                </app-input-field>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn  btn-light" style="width: 100%; height: 45px;" (click)="onAddProductClick()">
+                    <span class="fa fa-user-circle"></span> {{!updateDetails ? 'Add new product' : 'Update product details'}}
+                </button>
+            </div>
+        </div>
+
+    </form>
+    <br>
+</div>
+<div *ngIf="isShowingAddForm" [ngClass]="{'image-validation-error': formControlErrorMessage['productImage'] && showErrors}"
+    style="width: 185px; min-height: 180px; margin-top: 25px; border: solid #88888888 0.5px; float: right; padding: 5px">
+    <div style="height: 120px;width: 170px">
+        <img *ngIf="addProductForm.get('productImage').value" [src]="addProductForm.get('productImage').value" alt="" height="120px" width="170px">
+    </div>
+    <hr style="margin: 5px">
+    <button class="btn  btn-light" style="width: 100%; height: 35px;">
+        <input type="file" accept=".jpeg,.png,.jpg" (change)="uploadImage($event)" style="height: 25px; width: 150px; position: absolute; z-index: 2; opacity: 0;">
+        <span class="fa fa-upload"></span> {{!updateDetails ? 'Upload product image' : 'Change product image'}}
+    </button>
+    <div *ngIf="formControlErrorMessage['productImage'] && showErrors">
+        {{formControlErrorMessage['productImage']}}
+    </div>
+</div>
+
+<div *ngIf="!isShowingAddForm" class="on-response">
+    <div class="status">
+
+    </div>
+    <h5>Product details</h5>
+    <hr style="margin-top: 0px">
+    <label for="">PRODUCT IMAGE</label>
+    <div class="row" style="height: 120px;width: 170px;margin-left: 2px;padding: 1.5px;border: solid 0.5px #88888888">
+        <img *ngIf="product.productImage" [src]="product.productImage" alt="" height="115px" width="165px">
+    </div>
+    <hr style="margin-bottom: 0px">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="">PRODUCT ID</label>
+            <div class="values" id="">{{!product.id ? 'No product ID' : product.id}}</div>
+        </div>
+        <div class="col-md-6">
+            <label for="">PRODUCT NAME</label>
+            <div class="values" id="">{{product.productName}}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="">PRODUCT CATEGORY</label>
+            <div class="values" id="">{{product.category}}</div>
+        </div>
+        <div class="col-md-6">
+            <label for="">PRODUCT DESCRIPTION</label>
+            <div class="values" id="">{{product.productDesc}}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="">PRODUCT PRICE</label>
+            <div class="values" id="">R {{product.price | number :'1.2-2'}}</div>
+        </div>
+        <div class="col-md-6">
+            <label for="">PRODUCT QUANTITY</label>
+            <div class="values" id="">{{product.quantity}}</div>
+        </div>
+    </div>
+    <br>
+    <hr style="margin-top: 0px">
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <button *ngIf="originatorId == 1" class="btn  btn-light" style="width: 48%; height: 40px;margin-right: 2px;" (click)="editProduct()">
+                <span class="fa fa-user-circle"></span> Edit this product
+            </button>
+            <button *ngIf="originatorId == 1" class="btn  btn-light" style="width: 50%; height: 40px;" (click)="addAnotherProduct()">
+                    <span class="fa fa-user-circle"></span> Add another product
+            </button>
+            <button *ngIf="originatorId == 2" class="btn  btn-light" style="width: 50%; height: 40px;float: right;" (click)="done()">
+                    <span class="fa fa-close"></span> Done
+            </button>
+        </div>
+    </div>
+
+</div>

@@ -1,5 +1,6 @@
 .home{
-    padding: 10px 144px;
+    padding: 5px 144px;
+    min-height: 632px;
 
 }
 .action{
@@ -16,19 +17,16 @@
     /* width: 205px; */
     min-height: 82px;
     border: solid 0.5px #888888;
+    position: sticky;
+    top: 137px;
+    background-color: rgba(250, 248, 248, 0.93);
 }
 .administration-area{
     border: 1px solid #eee;
     float: right;
+    margin-bottom: 20px;
+    width: 73%;
 }
-
-.add-product-area{
-    width: 432px;
-    float: left;
-    /* margin: auto; */
-}
-
-
 
 .side-nav .nav-item{
     padding: 5px;
@@ -77,15 +75,31 @@
     padding: 2px;
 }
 
+.sub-nav-item .active{
+    cursor: pointer;
+    background-color: #888888;
+    color: white;
+    border-radius: 2px;
+    padding: 2px;
+}
+
 i{
     width: 23px;
 }
 
-h3{
-    margin-bottom: 40px;
+.page-header{
+    padding: 20px 12px;
+    /* line-height: 9; */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 62px;
+    margin-bottom: 30px;
+    border: solid 1px #88888888;
+    height: 70px;
+    z-index: 5;
+    background-color: rgba(250, 248, 248, 0.93);
 }
 
-.image-validation-error{
-    color:rgba(243, 23, 0, 0.5);
-    border: 0.5px solid rgba(243, 23, 0, 0.5);;
+.page-header h3{
+    margin: 0px;
 }

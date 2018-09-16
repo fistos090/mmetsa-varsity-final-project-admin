@@ -1,0 +1,51 @@
+<div *ngIf="productWrapper && (openFormId == -1 || openFormId == itemId)" class="view-all-products row">
+    <div class="product-image col-md-3">
+        <label for="">PRODUCT IMAGE</label>
+        <div class="row" style="height: 120px;width: 100%;margin-left: 2px;padding: 1.5px;border: solid 0.5px #88888888">
+            <img *ngIf="productWrapper.productImage" [src]="productWrapper.productImage" alt="" height="115px" width="100%">
+        </div>
+    </div>
+    <div class="product-details col-md-7">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="">PRODUCT ID</label>
+                <div class="values" id="">{{productWrapper.product.id}}</div>
+            </div>
+            <div class="col-md-6">
+                <label for="">PRODUCT NAME</label>
+                <div class="values" id="">{{productWrapper.product.productName}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="">PRODUCT CATEGORY</label>
+                <div class="values" id="">{{productWrapper.product.category}}</div>
+            </div>
+            <div class="col-md-6">
+                <label for="">PRODUCT DESCRIPTION</label>
+                <div class="values" id="">{{productWrapper.product.productDesc}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="">PRODUCT PRICE</label>
+                <div class="values" id="">R {{productWrapper.product.price | number :'1.2-2'}}</div>
+            </div>
+            <div class="col-md-6">
+                <label for="">PRODUCT QUANTITY</label>
+                <div class="values" id="">{{productWrapper.product.quantity}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <label for="">Actions</label>
+        <span (click)="editProductDetails()" style="cursor: pointer;" mat-raised-button title="Edit and Update product details" aria-label="Button that displays a tooltip in various positions">
+            <i class="fa {{editDetailsStatus ? 'fa-close' : 'fa-edit'}}"></i>
+        </span>
+    </div>
+</div>
+<div class="row" style="    margin: auto;width: 95%;" *ngIf="editDetailsStatus" >
+        <h4>Edit & Update product details</h4>
+        <hr style="margin-left: 0px;">
+        <add-product-form (outActionEvent)="processChildEvent($event)" [originatorId]="2" [product]="productWrapper.product" [updateDetails]="true"></add-product-form>
+</div>

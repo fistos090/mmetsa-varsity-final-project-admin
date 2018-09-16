@@ -1,0 +1,21 @@
+.view-all-products{
+    border: 0.3px solid;
+    padding: 5px 0px 11px;
+    margin: 0px 0px 10px;
+
+}
+
+.view-all-products label{
+    font-weight: 600;
+    margin-bottom: 0px;
+    color: #888888;
+    font-size: 11px;
+    text-decoration: underline;
+}
+.view-all-products .product-details{
+    /* float: right; */
+}
+
+.view-all-products .product-image{
+    /* float: left; */
+}

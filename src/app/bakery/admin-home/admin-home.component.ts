@@ -1,9 +1,11 @@
+import { ProductWrapper } from './../common/data-models/product-wrapper-model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { SpinnerService } from 'src/app/bakery/common/service-spinner/spinner-service';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/bakery/common/services/admin.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
     selector: 'app-admin-home',
@@ -13,53 +15,30 @@ import { AdminService } from 'src/app/bakery/common/services/admin.service';
 export class AdminHomeComponent implements OnInit {
 
     navItems = [{ id: 'id1', status: false }, { id: 'id2', status: false }, { id: 'id3', status: false }];
-    addProductForm: FormGroup;
-    image: any;
-    imageErrorMessage = '';
+    
 
-    showErrors = false;
-    formErrors = {
-        productName: {
-            required:'Product name is required',
-            pattern: 'Provide a valid product name'
-        },
-        category: {
-            required:'Category is required',
-        },
-        productDesc: {
-            required:'Product description is required',
-            pattern: 'Only letters are allowed in field' 
-        },
-        price: {
-            required:'Please provide product price',
-            pattern: 'only numbers are allowed'
-        },
-        quantity: {
-            required:'Provide number of products to add',
-            pattern: 'only numbers are allowed'
-        },
-        prodImage: {
-            required:'Product picture must be uploaded'
-        }
-    };
-  
-    formControlErrorMessage = {
-        productName: '',
-        category: '',
-        productDesc: '',
-        price: '',
-        quantity: '',
-        prodImage: '',
-        showErrors: false
-    };
+
+    isCHP = false;
+    isAllOrders = true;
+    isAddNewProduct = false;
+    isAllShopProducts = false;
+    isAllRegisteredCustomer = false;
+
+    products = [];
+    formOpenningEvent = new Subject<number>();
+    openFormId = -1;
 
     constructor(private formBuilder: FormBuilder, private httpClient: HttpClient, private adminService: AdminService,
         private router: Router, private spinner: SpinnerService) {
-
+            this.formOpenningEvent.subscribe(openFormId => {
+                this.openFormId = openFormId;
+            })
     }
 
     ngOnInit(): void {
-        this.openAddProductForm();
+        this.processAction('isCHP');
+        this.navItems[0].status = true;
+
     }
 
     expandNavItem(id: string) {
@@ -70,92 +49,39 @@ export class AdminHomeComponent implements OnInit {
         })
     }
 
-    openAddProductForm() {
-        this.addProductForm = this.formBuilder.group({
-            productName: ['', [Validators.required, Validators.pattern(/^(?![ ]+$)[a-zA-Z ]+$/)]],
-            category: ['', [Validators.required]],
-            productDesc: ['', [Validators.required, Validators.pattern(/^(?![ ]+$)[a-zA-Z ]+$/)]],
-            price: ['', [Validators.required, Validators.pattern(/^(?![ ]+$)[0-9 ]+$/)]],
-            quantity: ['', [Validators.required, Validators.pattern(/^(?![ ]+$)[0-9 ]+$/)]],
-            prodImage: ['', [Validators.required]]
-        });
-        this.addProductForm.statusChanges.subscribe(val => {
-            this.onSubmit();
-        })
-    }
+    processAction(action: string): void {
 
-    onSubmit(): void {
-        const form = this.addProductForm;
-        const formControls = this.addProductForm.controls;
-    
-        for (const control in formControls) {
-          if (form.controls[control].invalid) {
-            for (const errorKey in form.controls[control].errors) {
-              if (!this.formControlErrorMessage[control] ||
-                this.formControlErrorMessage[control] !== this.formErrors[control][errorKey]) {
-                
-                this.formControlErrorMessage[control] = this.formErrors[control][errorKey];
-              }
-            }
-    
-          }
-        }
-    
-      }
+        this.isCHP = action === 'isCHP';
+        this.isAllOrders = action === 'isAllOrders';
+        this.isAddNewProduct = action === 'isAddNewProduct';
+        this.isAllShopProducts = action === 'isAllShopProducts';
+        this.isAllRegisteredCustomer = action === 'isAllRegisteredCustomer';
 
-    uploadImage(event): void {
+        switch (action) {
+            case 'isCHP':
+                break;
+            case 'isAllOrders':
+                break;
+            case 'isAddNewProduct':
+                // this.openAddProductForm();
+                break;
+            case 'isAllShopProducts':
 
-        let fileLocation = event.target.files[0];
-
-        let fileReader = new FileReader();
-        fileReader.readAsDataURL(fileLocation)
-
-        fileReader.onloadstart = function(ev) {
-            console.log('started', ev)
-        }.bind(this)
-
-        fileReader.onprogress = function(ev) {
-            console.log('progress', ev)
-        }.bind(this)
-
-        fileReader.onloadend = function(ev) {
-            this.image = fileReader.result;
-            this.addProductForm.controls['prodImage'].setValue(this.image);
-            if (this.addProductForm.controls['prodImage'].valid) {
-                this.formControlErrorMessage['prodImage'] = undefined;
-            }
-            
-        }.bind(this)
-
-    }
-
-    onAddProductClick() {
-        this.showErrors = true;
-        this.onSubmit();
-        if (this.addProductForm.valid) {
-
-            let requestData = {
-                'sessionID': this.adminService.logonAdmin.sessionID,
-                'adminID': this.adminService.logonAdmin.userIn.admin.id,
-                'product': this.addProductForm.value
-            }
-            this.httpClient.post('/BAKERY/loadNewProduct', requestData).subscribe(
+            this.httpClient.get<ProductWrapper>('/BAKERY/displayAllProducts').subscribe(
                 response => {
-
-                    if (response['status'] == 'CREATED') {
-                        this.image = undefined;
-                        this.addProductForm.reset();
-                    }
- 
-                    alert(response['message'])
-                    console.log('*********',response);
+                    console.log('************** >>>>>>', response);
+                    this.products = response['products'];
                 },
                 error => {
-                    // alert(error['message'])
-                    console.log('*********',error);
+                    console.log('************** >>>>>>', error);
                 }
-            );
-        }
+            )
+                break;
+            case 'isAllRegisteredCustomer':
+                break;
 
+        }
     }
+
+
 }
