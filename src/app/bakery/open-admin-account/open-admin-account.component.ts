@@ -63,7 +63,7 @@ export class OpenAdminAccountComponent implements OnInit {
   ngOnInit() {
 
     this.registerForm = this.formBuilder.group({
-      accountPhoto: ['', [Validators.required]],
+      accountPhoto: ['', []],
       firstname: ['', [Validators.required, Validators.pattern(/^(?![ ]+$)[a-zA-Z ]+$/)]],
       lastname: ['', [Validators.required, Validators.pattern(/^(?![ ]+$)[a-zA-Z ]+$/)]],
       email: ['', [CustomValidations.isValidEmailDomain, Validators.required, Validators.maxLength(50), Validators.pattern(/^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
