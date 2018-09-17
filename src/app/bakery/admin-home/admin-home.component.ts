@@ -49,6 +49,13 @@ export class AdminHomeComponent implements OnInit {
         })
     }
 
+    removeProduct(productIndex: number){
+        if (this.products) {
+            this.products.splice(productIndex,1);
+            this.openFormId = -1;
+        }
+    }
+
     processAction(action: string): void {
 
         this.isCHP = action === 'isCHP';
@@ -66,11 +73,12 @@ export class AdminHomeComponent implements OnInit {
                 // this.openAddProductForm();
                 break;
             case 'isAllShopProducts':
-
+            this.openFormId = -1;
             this.httpClient.get<ProductWrapper>('/BAKERY/displayAllProducts').subscribe(
                 response => {
                     console.log('************** >>>>>>', response);
                     this.products = response['products'];
+                    window.scroll(0,0);
                 },
                 error => {
                     console.log('************** >>>>>>', error);

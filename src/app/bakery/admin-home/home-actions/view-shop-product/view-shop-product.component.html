@@ -39,13 +39,31 @@
     </div>
     <div class="col-md-1">
         <label for="">Actions</label>
-        <span (click)="editProductDetails()" style="cursor: pointer;" mat-raised-button title="Edit and Update product details" aria-label="Button that displays a tooltip in various positions">
+        <span (click)="editProductDetails()" style="cursor: pointer;margin-right: 8px;font-size: 25px" mat-raised-button [title]="!editDetailsStatus ? 'Edit and Update product details' : 'Close'" aria-label="Button that displays a tooltip in various positions">
             <i class="fa {{editDetailsStatus ? 'fa-close' : 'fa-edit'}}"></i>
+        </span>
+        <span (click)="openRemoveProductConfirmation()" style="cursor: pointer;font-size: 25px" mat-raised-button [title]="!removeDetailsStatus ? 'Delete this product on the database' : 'Close'" aria-label="Button that displays a tooltip in various positions">
+            <i class="fa {{removeDetailsStatus ? 'fa-close' : 'fa-trash'}}"></i>
         </span>
     </div>
 </div>
 <div class="row" style="    margin: auto;width: 95%;" *ngIf="editDetailsStatus" >
-        <h4>Edit & Update product details</h4>
+        <h4>Edit and Update product details</h4>
         <hr style="margin-left: 0px;">
         <add-product-form (outActionEvent)="processChildEvent($event)" [originatorId]="2" [product]="productWrapper.product" [updateDetails]="true"></add-product-form>
+</div>
+<div class="row" style="    margin: auto;width: 95%;" *ngIf="removeDetailsStatus" >
+        <h4>Remove product from database</h4>
+        <hr style="margin-left: 0px;">
+        <div class="warning">
+            Please note this action cannot be undone. <br>
+            You can continue with this action if you are sure of what you are doing.
+        </div>
+        <br>
+        <div style="margin: auto;width: 50%;">
+            <button autofocus="true" class="btn  btn-light" style="width: 100%; height: 40px;" (click)="onRemoveProductClick(productWrapper.product.id)">
+                        <span class="fa fa-trash"></span> Delete product
+            </button>
+        </div>
+        <br>
 </div>

@@ -20,6 +20,7 @@ import { SpinnerService } from 'src/app/bakery/common/service-spinner/spinner-se
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddProductComponent } from 'src/app/bakery/admin-home/home-actions/add-product-form/add-product-form.componet';
 import { ViewShopProductComponent } from 'src/app/bakery/admin-home/home-actions/view-shop-product/view-shop-product.component';
+import { ViewShopCustomerOrderComponent } from 'src/app/bakery/admin-home/home-actions/view-shop-order/view-shop-order.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ViewShopProductComponent } from 'src/app/bakery/admin-home/home-actions
     AdminHomeComponent,
     AdminTopNavComponent,
     AddProductComponent,
-    ViewShopProductComponent
+    ViewShopProductComponent,
+    ViewShopCustomerOrderComponent
   ],
   imports: [
     BrowserModule,

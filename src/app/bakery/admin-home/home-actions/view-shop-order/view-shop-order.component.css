@@ -1,0 +1,28 @@
+label{
+    font-weight: 600;
+    margin-bottom: 0px;
+    color: #888888;
+    font-size: 11px;
+    text-decoration: underline;
+    display: block;
+}
+
+.values{
+    padding-left: 5px;
+}
+
+.actions{
+    /* width: 50%; */
+    height: 22px;
+    /* float: right; */
+}
+
+.actions #act{
+    width: 30%;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.actions #act div{
+    margin: 0% 15%;
+}

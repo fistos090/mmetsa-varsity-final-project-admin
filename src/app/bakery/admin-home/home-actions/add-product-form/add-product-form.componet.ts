@@ -61,8 +61,9 @@ export class AddProductComponent implements OnInit {
         productImage: '',
         showErrors: false
     };
-    constructor(private formBuilder: FormBuilder, private httpClient: HttpClient, private adminService: AdminService,
-        private router: Router, private spinner: SpinnerService) {
+    constructor(private formBuilder: FormBuilder, private httpClient: HttpClient,
+                private adminService: AdminService,
+                private router: Router, private spinner: SpinnerService) {
 
     }
 
