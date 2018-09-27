@@ -91,7 +91,7 @@
         <hr style="margin-top: 0px">
         <div style="margin-bottom: 20px;">
 
-            <app-tabs-menu (onTabChange)="onTabChange($event)" [tabs]="tabs" [activeTab]="0">
+            <app-tabs-menu (onTabChange)="onTabChange($event)" [tabs]="tabs" [activeTab]="selectedTabIndex">
                 <app-tab-panel [panelId]="0">
                     <h4>All customers' open (Unprocessed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print"></span></h4> <br>
                     <div class="loader" *ngIf="!orderRequestIsReady"></div>

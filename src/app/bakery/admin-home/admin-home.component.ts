@@ -33,6 +33,7 @@ export class AdminHomeComponent implements OnInit {
     formOpenningEvent = new Subject<number>();
     openFormId = -1;
     logonAdmin: AdminLogon;
+    selectedTabIndex = 0;
    
     tabs = [
         new Tab({
@@ -189,7 +190,7 @@ export class AdminHomeComponent implements OnInit {
                     if (this.closedOrders) {
                         this.closedOrders.push(order);
                     }
-
+                    this.selectedTabIndex = 1;
                 }
 
                 return true;
