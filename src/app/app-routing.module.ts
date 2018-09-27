@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLoginComponent } from 'src/app/bakery/admin-login/admin-login.component';
 import { OpenAdminAccountComponent } from 'src/app/bakery/open-admin-account/open-admin-account.component';
 import { AdminHomeComponent } from 'src/app/bakery/admin-home/admin-home.component';
+import { AuthGuard } from 'src/app/bakery/auth.guard';
 
 const routes: Routes = [
   {
@@ -21,25 +22,9 @@ const routes: Routes = [
   },
   {
     path: 'admin-home',
+    canActivate: [AuthGuard],
     component: AdminHomeComponent
   }
-  // ,
-  // {
-  //   path: 'products-category/:categoryName',
-  //   component: CategoryPageComponent
-  // },
-  // {
-  //   path: 'specials',
-  //   component: SpecialsPageComponent
-  // },
-  // {
-  //   path: 'shopping-bascket',
-  //   component: ShoppingBusketComponent
-  // },
-  // {
-  //   path: 'manage-profile',
-  //   component: UserManageProfileComponent
-  // }
 ];
 
 @NgModule({

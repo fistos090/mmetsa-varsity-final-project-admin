@@ -38,7 +38,7 @@ export class AdminTopNavComponent implements OnInit {
         // this.spinner.hideSpinner();
         if (response['status'] == 'OK') {
           alert('You have successfully logout');
-          this.adminService.setLogonAdmin(null);
+          this.adminService.setLogonAdmin(undefined);
           this.router.navigate(['admin-login']);
         } else {
           alert('We couldn\'t not log you out');
