@@ -178,28 +178,32 @@ export class AdminHomeComponent implements OnInit {
     }
 
     processOrderEventHandler(eventData: any): void{
-
-        const index = this.openOrders.findIndex( (order) => {
+        console.log('^^^^^^^^^^^^^^^^^^^^^^^^',eventData);
+        if ('update' === eventData['action']) {
+            const index = this.openOrders.findIndex( (order) => {
             
-            if (order.id === eventData['id']) {
-                if ('update' === eventData['action']) {
-
-                    if (order) {
-                        order.orderStatus = 'CLOSED';
-                    }
-                    if (this.closedOrders) {
-                        this.closedOrders.push(order);
-                    }
-                    this.selectedTabIndex = 1;
+                if (order.id === eventData['id']) {
+                   
+                        if (order) {
+                            order.orderStatus = 'CLOSED';
+                        }
+                        if (this.closedOrders) {
+                            this.closedOrders.push(order);
+                        }
+                        this.selectedTabIndex = 1;
+                    return true;
                 }
-
-                return true;
-            }
-
-            return false;
-        });
-
-        this.openOrders.splice(index,1);
+    
+                return false;
+            });
+    
+            this.openOrders.splice(index,1);
+        } else {
+            const index = this.closedOrders.findIndex( order => order.id === eventData['id']);
+            console.log('^^^^^^^^^^^^^^^^^^^^^^^^',index);
+            this.closedOrders.splice(index,1);
+        }
+ 
     }
 
 

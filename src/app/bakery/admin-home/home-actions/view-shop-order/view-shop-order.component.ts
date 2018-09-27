@@ -64,16 +64,21 @@ export class ViewShopCustomerOrderComponent implements OnInit {
         let requestPayLoad = {
             'sessionID': this.logonAdmin.sessionID,
             'email': this.logonAdmin.userIn.admin.email,
-            'adminID': this.logonAdmin.userIn.admin.id
+            // 'adminID': this.logonAdmin.userIn.admin.id,
+            'orderID': this.cusOrder.id
         }
 
         this.spinnerIsShowing = true;
         this.httpClient.post('/BAKERY/deleteCustomerOrder',requestPayLoad).subscribe( response => {
+            
+            this.spinnerIsShowing = false;
 
             if (response['status'] == 'REMOVED') {
-                this.spinnerIsShowing = false;
+               
                 this.processOrderEvent.emit({id: this.cusOrder.id, action: 'delete'});
             }
+
+            alert(response['message']);
         },
         error => {
             console.log('error===>', error);
@@ -86,16 +91,16 @@ export class ViewShopCustomerOrderComponent implements OnInit {
         let requestPayLoad = {
             'sessionID': this.logonAdmin.sessionID,
             'email': this.logonAdmin.userIn.admin.email,
-            'adminID': this.logonAdmin.userIn.admin.id,
+            // 'adminID': this.logonAdmin.userIn.admin.id,
             'order': this.cusOrder.orderStatus = 'CLOSED'
         }
 
         this.spinnerIsShowing = true;
         this.httpClient.post('/BAKERY/updateCustomerOrder',requestPayLoad).subscribe( response => {
 
-            if (response['status'] == 'UPDATED') {
+            this.spinnerIsShowing = false;
 
-                this.spinnerIsShowing = false;
+            if (response['status'] == 'UPDATED') {
                 this.processOrderEvent.emit({id: this.cusOrder.id, action: 'update'});
             }
         },

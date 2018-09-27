@@ -100,7 +100,7 @@
                 <app-tab-panel [panelId]="1">
                     <h4>All customers' closed (Processed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print"></span></h4><br>
                     <div class="loader" *ngIf="!orderRequestIsReady"></div>
-                    <view-shop-customer-order [logonAdmin]="logonAdmin" [cusOrder]="co" *ngFor="let co of closedOrders"></view-shop-customer-order>
+                    <view-shop-customer-order (processOrderEvent)="processOrderEventHandler($event)" [logonAdmin]="logonAdmin" [cusOrder]="co" *ngFor="let co of closedOrders"></view-shop-customer-order>
                 </app-tab-panel>
             </app-tabs-menu>
 
