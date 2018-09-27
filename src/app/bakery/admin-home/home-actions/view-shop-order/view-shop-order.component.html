@@ -16,8 +16,7 @@
         <span class="actions">
             <label>Actions</label>
             <span class="actions-icons">
-                <span (click)="processAction(viewId === 1 ? -1 : 1)" class="fa {{ viewId !== 1 ? 'fa-eye' : 'fa-eye-slash'}}" title="{{ viewId !== 1 ? 'View order products' : 'Hide order products'}}"
-                    (click)="viewOrderDetails(cusOrder.id)">
+                <span (click)="processAction(viewId === 1 ? -1 : 1)" class="fa {{ viewId !== 1 ? 'fa-eye' : 'fa-eye-slash'}}" title="{{ viewId !== 1 ? 'View order products' : 'Hide order products'}}">
 
                 </span>
                 <span (click)="processAction(2)" class="fa fa-print" title="Print this order report"></span>

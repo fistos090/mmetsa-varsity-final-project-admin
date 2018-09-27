@@ -74,7 +74,7 @@ export class UtilService {
         return moment(date).format('DD/MM/YYYY, HH:MM:SS');
     }
 
-    formatDate(date: string) {
+    formatDate(date: Date) {
         return moment(date).format('DD MMMM YYYY');
     }
 
