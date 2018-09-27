@@ -21,6 +21,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddProductComponent } from 'src/app/bakery/admin-home/home-actions/add-product-form/add-product-form.componet';
 import { ViewShopProductComponent } from 'src/app/bakery/admin-home/home-actions/view-shop-product/view-shop-product.component';
 import { ViewShopCustomerOrderComponent } from 'src/app/bakery/admin-home/home-actions/view-shop-order/view-shop-order.component';
+import { UtilService } from 'src/app/bakery/common/services/utility-service';
+import { TabsMenuComponent } from 'src/app/bakery/common/tabs-menu/tabs-menu.component';
+import { TabPanelComponent } from 'src/app/bakery/common/tabs-menu/tab-panel/tab-panel.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { ViewShopCustomerOrderComponent } from 'src/app/bakery/admin-home/home-a
     AdminTopNavComponent,
     AddProductComponent,
     ViewShopProductComponent,
-    ViewShopCustomerOrderComponent
+    ViewShopCustomerOrderComponent,
+    TabsMenuComponent,
+    TabPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +56,7 @@ import { ViewShopCustomerOrderComponent } from 'src/app/bakery/admin-home/home-a
   entryComponents: [
     ServiceSpinnerComponent
   ],
-  providers: [AdminService, SpinnerService],
+  providers: [AdminService, SpinnerService, UtilService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

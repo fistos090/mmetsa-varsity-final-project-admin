@@ -87,7 +87,7 @@
     <br>
 </div>
 <div *ngIf="isShowingAddForm" [ngClass]="{'image-validation-error': formControlErrorMessage['productImage'] && showErrors}"
-    style="width: 185px; min-height: 180px; margin-top: 25px; border: solid #88888888 0.5px; float: right; padding: 5px">
+    style="width: 185px; min-height: 180px; margin-top: 25px; margin-left: 20px; border: solid #88888888 0.5px; display: inline-block; padding: 5px">
     <div style="height: 120px;width: 170px">
         <img *ngIf="addProductForm.get('productImage').value" [src]="addProductForm.get('productImage').value" alt="" height="120px" width="170px">
     </div>

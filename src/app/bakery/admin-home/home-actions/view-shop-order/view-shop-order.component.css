@@ -1,28 +1,134 @@
-label{
-    font-weight: 600;
-    margin-bottom: 0px;
-    color: #888888;
-    font-size: 11px;
-    text-decoration: underline;
-    display: block;
+.user-manage-main{
+    width: 96%;
+    /* border: solid 1px #888888; */
+    margin: auto;
+    margin-bottom: 5px;
+}
+.order{
+    height: 50px;
+    width: 100%;
+    border: solid 1px gray;
+    background-color: white;
+    box-shadow: 1px 1px 3px #888888;
+}
+.products-panel{
+    width: 100%;
+    min-height: 150px;
+    padding: 30px 20px;
+    border: #555 dotted 0.5px;
+    box-shadow: 1px 1px 3px #888888;
 }
 
-.values{
-    padding-left: 5px;
+.products-panel .loader{
+    margin: auto;
+}
+
+.details{
+    height: inherit;
+    width: 75%;
+    float: left;
+}
+
+.details ul{
+    width: 100%;
+    list-style-type: none;
+    height: inherit ;
+    padding: 0px;
+}
+
+.details ul li{
+    float: left;
+    width: 25%;
+    padding-left: 3%;
+    margin: 11px 0px;
+    
+    height: 25px;
+}
+.details ul li:first-child{
+    width: 10%;
+}
+.details ul li:nth-child(2){
+    width: 60%;
+}
+.details ul li:last-child{
+    margin: 0px;
+    border-right: solid #555 0.5px;
+    height: inherit;
+    padding: 11px 3%;
+}
+
+.details ul li:not(:last-child){
+    border-right: solid #555 0.5px;
 }
 
 .actions{
-    /* width: 50%; */
-    height: 22px;
-    /* float: right; */
+    height: inherit;
+    width: 25%;
+    padding-left: 1%;
+    float: right;
+    bottom: 0px;
+    text-transform: uppercase;
+    text-decoration: underline
+}
+.actions label{
+    color: rgb(179, 172, 172);
+    font-size: 12px;
+    height: 10px;
+    text-decoration: underline;
 }
 
-.actions #act{
-    width: 30%;
-    display: inline-block;
+.actions .actions-icons {
+    display: block;
+} 
+.actions .actions-icons span{
+    font-size: 17px;
+    margin-right: 25px;
+}
+
+.actions .actions-icons span:hover{
     cursor: pointer;
 }
 
-.actions #act div{
-    margin: 0% 15%;
+.hide-prod-btn{
+    float: right;
+    position: relative;
+    border-bottom: solid;
+    border-left: solid;
+    border-top: solid;
+    padding: 8px;
+    bottom: 25px;
+}
+
+.hide-prod-btn:hover{
+    cursor: pointer;
+}
+
+.order-prod{
+    border: solid 0.5px #888888;
+    width: 180px;
+    height: 234px;
+    padding: 5px;
+    display: inline-block;
+    background-color: white;
+    margin-left: 5px;
+    /* box-shadow: 1px 1px 3px #888888; */
+}
+
+.order-prod img{
+    width: 99%;
+    height: 131px;
+    margin: auto;
+}
+
+.order-prod span{
+    width: 100%;
+}
+
+.order-prod span .sub-title{
+    width: 59px;
+    height: 10px;
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #888888;
+    display: inline-block;
 }

@@ -6,6 +6,9 @@ import { SpinnerService } from 'src/app/bakery/common/service-spinner/spinner-se
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/bakery/common/services/admin.service';
 import { Subject } from 'rxjs/Subject';
+import { Tab } from 'src/app/bakery/common/tabs-menu/tabs-menu.model';
+import { CustomerOrder } from 'src/app/bakery/common/data-models/customer-order.model';
+import { AdminLogon } from 'src/app/bakery/common/data-models/admin-logon.model';
 
 @Component({
     selector: 'app-admin-home',
@@ -24,9 +27,34 @@ export class AdminHomeComponent implements OnInit {
     isAllShopProducts = false;
     isAllRegisteredCustomer = false;
 
+    orderRequestIsReady = true;
+
     products = [];
     formOpenningEvent = new Subject<number>();
     openFormId = -1;
+    logonAdmin: AdminLogon;
+   
+    tabs = [
+        new Tab({
+          tabId: 0,
+          tabTitle: 'Unprocessed orders'
+        }),
+        new Tab({
+          tabId: 1,
+          tabTitle: 'Processed orders'
+        }),
+    ];
+
+    openOrders: CustomerOrder[];
+
+    closedOrders: CustomerOrder[] = [{
+        "custID": 1,
+        "custOrderDate": new Date(),
+        "custOrderTime": new Date().getTime(),
+        "shippingCost": 55.54,
+        "id": 1,
+        'orderStatus': 'CLOSED'
+    }];;
 
     constructor(private formBuilder: FormBuilder, private httpClient: HttpClient, private adminService: AdminService,
         private router: Router, private spinner: SpinnerService) {
@@ -36,10 +64,15 @@ export class AdminHomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.processAction('isCHP');
+        this.processAction('isAllShopProducts');
         this.navItems[0].status = true;
+        this.logonAdmin = this.adminService.getLogonAdmin();
 
     }
+
+    onTabChange(tabId: number): void {
+       
+      }
 
     expandNavItem(id: string) {
         this.navItems.forEach(navItem => {
@@ -64,10 +97,62 @@ export class AdminHomeComponent implements OnInit {
         this.isAllShopProducts = action === 'isAllShopProducts';
         this.isAllRegisteredCustomer = action === 'isAllRegisteredCustomer';
 
+        this.orderRequestIsReady = false;
+        this.openOrders = [];
+        this.closedOrders = [];
+        this.products = [];
+
+
         switch (action) {
             case 'isCHP':
                 break;
             case 'isAllOrders':
+
+            let subscription = this.httpClient.get('/BAKERY/displayAllOrders/' + this.logonAdmin.sessionID+'/'+this.logonAdmin.userIn.admin.id).subscribe(
+                (response) => {
+
+                    if (response) {
+                        response['allOrders'];
+                        console.log('response[\'customerOrders\']', response['allOrders']);
+                        this.orderRequestIsReady = true;
+
+                        let orders = response['allOrders'];
+                     
+                        if (orders) {
+                            orders.forEach((order: CustomerOrder) => {
+                                if (order.orderStatus == 'OPEN') {
+
+                                    this.openOrders.push(order);
+                                    
+
+                                } else {
+
+                                    this.closedOrders.push(order);
+                                    
+                                }
+                            });
+                        }
+                    }
+                    // this.spinner.hideSpinner();
+                    if (subscription) {
+                        subscription.unsubscribe();
+                    }
+                    
+                },
+                (error) => {
+                    console.log(error);
+                    // this.spinner.hideSpinner();
+                    if (subscription) {
+                        subscription.unsubscribe();
+                    }
+                }
+            );
+
+
+
+
+
+
                 break;
             case 'isAddNewProduct':
                 // this.openAddProductForm();
@@ -89,6 +174,31 @@ export class AdminHomeComponent implements OnInit {
                 break;
 
         }
+    }
+
+    processOrderEventHandler(eventData: any): void{
+
+        const index = this.openOrders.findIndex( (order) => {
+            
+            if (order.id === eventData['id']) {
+                if ('update' === eventData['action']) {
+
+                    if (order) {
+                        order.orderStatus = 'CLOSED';
+                    }
+                    if (this.closedOrders) {
+                        this.closedOrders.push(order);
+                    }
+
+                }
+
+                return true;
+            }
+
+            return false;
+        });
+
+        this.openOrders.splice(index,1);
     }
 
 

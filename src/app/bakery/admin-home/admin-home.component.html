@@ -6,7 +6,7 @@
     </div>
 </div> -->
 
-<div class="home">
+<div class="container">
     <div class="page-header">
         <h3>Welcome to bakery administration portal</h3>
     </div>
@@ -19,8 +19,7 @@
             </span>
             <hr *ngIf="navItems[0].status">
             <div *ngIf="navItems[0].status" class="sub-nav-item">
-                <span [ngClass]="{'active': isCHP}" (click)="processAction('isCHP')"> <i class="fa fa-home"></i> CHP
-                    products</span>
+                <!-- <span [ngClass]="{'active': isCHP}" (click)="processAction('isCHP')"> <i class="fa fa-home"></i> CHP products</span> -->
                 <span [ngClass]="{'active': isAddNewProduct}" (click)="processAction('isAddNewProduct')"> <i class="fa fa-plus-circle"></i>
                     Add new product</span>
                 <span [ngClass]="{'active': isAllShopProducts}" (click)="processAction('isAllShopProducts')"> <i class="fa fa-eye"></i>
@@ -57,13 +56,13 @@
     </div>
 
     <!-- Manage customer web home page products -->
-    <div *ngIf="isCHP" class="administration-area col-md-8">
+    <!-- <div *ngIf="isCHP" class="administration-area col-md-8">
         <h4> <i class="fa fa-plus-circle"></i> Manage customer home page products</h4>
         <hr style="margin-top: 0px">
         <div>
 
         </div>
-    </div>
+    </div> -->
 
     <div *ngIf="isAllShopProducts" class="administration-area col-md-8">
         <h4> <i class="fa fa-eye"></i> View all shop products</h4>
@@ -91,7 +90,20 @@
         <h4> <i class="fa fa-plus-circle"></i> View all customer orders</h4>
         <hr style="margin-top: 0px">
         <div style="margin-bottom: 20px;">
-            <view-shop-customer-order></view-shop-customer-order>
+
+            <app-tabs-menu (onTabChange)="onTabChange($event)" [tabs]="tabs" [activeTab]="0">
+                <app-tab-panel [panelId]="0">
+                    <h4>All customers' open (Unprocessed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print"></span></h4> <br>
+                    <div class="loader" *ngIf="!orderRequestIsReady"></div>
+                    <view-shop-customer-order (processOrderEvent)="processOrderEventHandler($event)" [logonAdmin]="logonAdmin" [cusOrder]="co" *ngFor="let co of openOrders"></view-shop-customer-order>
+                </app-tab-panel>
+                <app-tab-panel [panelId]="1">
+                    <h4>All customers' closed (Processed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print"></span></h4><br>
+                    <div class="loader" *ngIf="!orderRequestIsReady"></div>
+                    <view-shop-customer-order [logonAdmin]="logonAdmin" [cusOrder]="co" *ngFor="let co of closedOrders"></view-shop-customer-order>
+                </app-tab-panel>
+            </app-tabs-menu>
+
         </div>
     </div>
 
