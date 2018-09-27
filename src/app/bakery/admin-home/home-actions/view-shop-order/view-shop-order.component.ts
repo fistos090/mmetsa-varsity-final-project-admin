@@ -62,9 +62,9 @@ export class ViewShopCustomerOrderComponent implements OnInit {
     onRemoveOrderClick(): void {
 
         let requestPayLoad = {
-            sessionID: this.logonAdmin.sessionID,
-            email: this.logonAdmin.userIn.admin.email,
-            adminID: this.logonAdmin.userIn.admin.id
+            'sessionID': this.logonAdmin.sessionID,
+            'email': this.logonAdmin.userIn.admin.email,
+            'adminID': this.logonAdmin.userIn.admin.id
         }
 
         this.spinnerIsShowing = true;
@@ -84,10 +84,10 @@ export class ViewShopCustomerOrderComponent implements OnInit {
     markAsProsessedClick(): void {
 
         let requestPayLoad = {
-            sessionID: this.logonAdmin.sessionID,
-            email: this.logonAdmin.userIn.admin.email,
-            adminID: this.logonAdmin.userIn.admin.id,
-            order: this.cusOrder.orderStatus = 'CLOSED'
+            'sessionID': this.logonAdmin.sessionID,
+            'email': this.logonAdmin.userIn.admin.email,
+            'adminID': this.logonAdmin.userIn.admin.id,
+            'order': this.cusOrder.orderStatus = 'CLOSED'
         }
 
         this.spinnerIsShowing = true;
