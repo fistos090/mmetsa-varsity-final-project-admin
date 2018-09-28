@@ -64,7 +64,6 @@ export class ViewShopCustomerOrderComponent implements OnInit {
         let requestPayLoad = {
             'sessionID': this.logonAdmin.sessionID,
             'email': this.logonAdmin.userIn.admin.email,
-            // 'adminID': this.logonAdmin.userIn.admin.id,
             'orderID': this.cusOrder.id
         }
 
@@ -88,11 +87,12 @@ export class ViewShopCustomerOrderComponent implements OnInit {
 
     markAsProsessedClick(): void {
 
+        this.cusOrder.orderStatus = 'CLOSED'
+
         let requestPayLoad = {
             'sessionID': this.logonAdmin.sessionID,
             'email': this.logonAdmin.userIn.admin.email,
-            // 'adminID': this.logonAdmin.userIn.admin.id,
-            'order': this.cusOrder.orderStatus = 'CLOSED'
+            'order': this.cusOrder
         }
 
         this.spinnerIsShowing = true;

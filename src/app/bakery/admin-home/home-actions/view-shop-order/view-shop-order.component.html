@@ -1,10 +1,6 @@
 <div class="user-manage-main">
     <div class="order">
         <div class="details">
-            <!-- <span></span>
-            <span></span>
-            <span></span>
-            <span>hhh</span> -->
             <ul>
                 <li>{{cusOrder.id}}</li>
                 <li>{{util.formatDate(cusOrder.custOrderDate)+', '+cusOrder.custOrderTime}}</li>
@@ -27,8 +23,9 @@
     </div>
     <div class="products-panel" *ngIf="viewId === 0">
         <h4>Confirm order deletion action.</h4>
-        <div>
-            This action cannot be undo, Please proceed if you are sure.
+        <div style="color: gold">
+            This action cannot be undo and all records linked to this record will be removed from the database as well.<br>
+            Please proceed if you are sure.
         </div>
         <br>
         <div *ngIf="!spinnerIsShowing" style="margin: auto;width: 50%;">

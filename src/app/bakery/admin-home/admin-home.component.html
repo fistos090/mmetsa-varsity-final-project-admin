@@ -1,10 +1,3 @@
-<!-- <div class="home">
-    <div class="action">
-        <span class="fa fa-product-hunt"></span>
-        <hr>
-        <label for="">Manage Products</label>
-    </div>
-</div> -->
 
 <div class="container">
     <div class="page-header">
@@ -82,7 +75,7 @@
         <h4> <i class="fa fa-plus-circle"></i> View all registered customers</h4>
         <hr style="margin-top: 0px">
         <div>
-
+        {{shopCustomers | json}}
         </div>
     </div>
 
@@ -96,11 +89,21 @@
                     <h4>All customers' open (Unprocessed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print"></span></h4> <br>
                     <div class="loader" *ngIf="!orderRequestIsReady"></div>
                     <view-shop-customer-order (processOrderEvent)="processOrderEventHandler($event)" [logonAdmin]="logonAdmin" [cusOrder]="co" *ngFor="let co of openOrders"></view-shop-customer-order>
+                    
+                    <div class="empty-list" *ngIf="openOrders.length <= 0">
+                        There are no unprocessed orders to display.
+                    </div>
+                
                 </app-tab-panel>
                 <app-tab-panel [panelId]="1">
                     <h4>All customers' closed (Processed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print"></span></h4><br>
                     <div class="loader" *ngIf="!orderRequestIsReady"></div>
                     <view-shop-customer-order (processOrderEvent)="processOrderEventHandler($event)" [logonAdmin]="logonAdmin" [cusOrder]="co" *ngFor="let co of closedOrders"></view-shop-customer-order>
+                    
+                    <div class="empty-list" *ngIf="closedOrders.length <= 0">
+                        There are no processed orders to display.
+                    </div>
+                
                 </app-tab-panel>
             </app-tabs-menu>
 

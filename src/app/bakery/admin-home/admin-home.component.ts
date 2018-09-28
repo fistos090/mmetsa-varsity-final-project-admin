@@ -9,6 +9,7 @@ import { Subject } from 'rxjs/Subject';
 import { Tab } from 'src/app/bakery/common/tabs-menu/tabs-menu.model';
 import { CustomerOrder } from 'src/app/bakery/common/data-models/customer-order.model';
 import { AdminLogon } from 'src/app/bakery/common/data-models/admin-logon.model';
+import { Customer } from '../common/data-models/customer.model';
 
 @Component({
     selector: 'app-admin-home',
@@ -47,15 +48,8 @@ export class AdminHomeComponent implements OnInit {
     ];
 
     openOrders: CustomerOrder[];
-
-    closedOrders: CustomerOrder[] = [{
-        "custID": 1,
-        "custOrderDate": new Date(),
-        "custOrderTime": new Date().getTime(),
-        "shippingCost": 55.54,
-        "id": 1,
-        'orderStatus': 'CLOSED'
-    }];;
+    closedOrders: CustomerOrder[];
+    shopCustomers: Customer[];
 
     constructor(private formBuilder: FormBuilder, private httpClient: HttpClient, private adminService: AdminService,
         private router: Router, private spinner: SpinnerService) {
@@ -149,11 +143,6 @@ export class AdminHomeComponent implements OnInit {
                 }
             );
 
-
-
-
-
-
                 break;
             case 'isAddNewProduct':
                 // this.openAddProductForm();
@@ -162,16 +151,29 @@ export class AdminHomeComponent implements OnInit {
             this.openFormId = -1;
             this.httpClient.get<ProductWrapper>('/BAKERY/displayAllProducts').subscribe(
                 response => {
-                    console.log('************** >>>>>>', response);
+                  
                     this.products = response['products'];
                     window.scroll(0,0);
                 },
                 error => {
                     console.log('************** >>>>>>', error);
                 }
-            )
+            );
+
                 break;
             case 'isAllRegisteredCustomer':
+
+            this.httpClient.get<ProductWrapper>('/BAKERY/getAllRegisteredCustomers/'+this.logonAdmin.sessionID+'/'+this.logonAdmin.userIn.admin.id).subscribe(
+                response => {
+                    if ( response['status'] == 'FETCHED') {
+                        this.shopCustomers = response['customers'];
+                    }
+                },
+                error => {
+                    console.log('************** >>>>>>', error);
+                }
+            );
+
                 break;
 
         }
