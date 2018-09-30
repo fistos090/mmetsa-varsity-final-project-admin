@@ -1,7 +1,7 @@
 import { ProductWrapper } from './../common/data-models/product-wrapper-model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SpinnerService } from 'src/app/bakery/common/service-spinner/spinner-service';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/bakery/common/services/admin.service';
@@ -10,11 +10,13 @@ import { Tab } from 'src/app/bakery/common/tabs-menu/tabs-menu.model';
 import { CustomerOrder } from 'src/app/bakery/common/data-models/customer-order.model';
 import { AdminLogon } from 'src/app/bakery/common/data-models/admin-logon.model';
 import { Customer } from '../common/data-models/customer.model';
+import { AdminHomeComponentService } from './admin-home-component.service';
 
 @Component({
     selector: 'app-admin-home',
     templateUrl: './admin-home.component.html',
-    styleUrls: ['./admin-home.component.css']
+    styleUrls: ['./admin-home.component.css'],
+    providers: [AdminHomeComponentService]
 })
 export class AdminHomeComponent implements OnInit {
 
@@ -51,8 +53,10 @@ export class AdminHomeComponent implements OnInit {
     closedOrders: CustomerOrder[];
     shopCustomers: Customer[];
 
+    ordersIds = [];
+
     constructor(private formBuilder: FormBuilder, private httpClient: HttpClient, private adminService: AdminService,
-        private router: Router, private spinner: SpinnerService) {
+        private router: Router, private spinner: SpinnerService,private adminHomeService: AdminHomeComponentService) {
             this.formOpenningEvent.subscribe(openFormId => {
                 this.openFormId = openFormId;
             })
@@ -179,7 +183,7 @@ export class AdminHomeComponent implements OnInit {
         }
     }
 
-    processOrderEventHandler(eventData: any): void{
+    processOrderEventHandler(eventData: any): void {
         console.log('^^^^^^^^^^^^^^^^^^^^^^^^',eventData);
         if ('update' === eventData['action']) {
             const index = this.openOrders.findIndex( (order) => {
@@ -200,13 +204,54 @@ export class AdminHomeComponent implements OnInit {
             });
     
             this.openOrders.splice(index,1);
+
+        } else if ('print' === eventData['action']) {
+            
+          
+
         } else {
             const index = this.closedOrders.findIndex( order => order.id === eventData['id']);
-            console.log('^^^^^^^^^^^^^^^^^^^^^^^^',index);
             this.closedOrders.splice(index,1);
         }
  
     }
+
+    printCustomerOrderReport(type: string){
+
+        const orders = type === 'open_orders' ? this.openOrders : this.closedOrders;
+        this.ordersIds = [];
+
+        orders.forEach( order => {
+            this.ordersIds.push({
+                'orderID': order.id
+            });
+        })
+
+        let headers = new HttpHeaders();
+            headers = headers.set('accept','application/pdf');
+            headers = headers.set('responseType','blob');
+         
+            let configObj = Object.assign({'headers': headers, 'responseType': "blob"});
+      
+        let requestPaylod = {
+              'adminID': this.logonAdmin.userIn.admin.id,
+              'sessionID': this.logonAdmin.sessionID,
+              'orderIDs': this.ordersIds
+        }
+
+        this.adminHomeService.printCustomerOrderReport(requestPaylod, configObj).subscribe(
+            response => {
+              this.ordersIds = [];
+              window.open(window.URL.createObjectURL(response));
+              
+            },
+            error => {
+              console.log('pdf document error', error);
+              this.ordersIds = [];
+            }
+          )
+    }
+
 
 
 }

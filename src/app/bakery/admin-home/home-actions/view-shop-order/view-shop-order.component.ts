@@ -1,9 +1,10 @@
 import { AdminLogon } from 'src/app/bakery/common/data-models/admin-logon.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { CustomerOrder } from "src/app/bakery/common/data-models/customer-order.model";
 import { UtilService } from "src/app/bakery/common/services/utility-service";
 import { ProductWrapper } from "src/app/bakery/common/data-models/product-wrapper-model";
+import { AdminHomeComponentService } from 'src/app/bakery/admin-home/admin-home-component.service';
 
 @Component({
     selector: 'view-shop-customer-order',
@@ -12,7 +13,7 @@ import { ProductWrapper } from "src/app/bakery/common/data-models/product-wrappe
 })
 export class ViewShopCustomerOrderComponent implements OnInit {
 
-    @Output() processOrderEvent = new EventEmitter<{id: number, action: string}>();
+    @Output() processOrderEvent = new EventEmitter<{id: number, action: string, type?: string}>();
     @Input() cusOrder: CustomerOrder;
     @Input() logonAdmin: AdminLogon;
 
@@ -21,8 +22,8 @@ export class ViewShopCustomerOrderComponent implements OnInit {
     spinnerIsShowing = false;
     orderProducts: ProductWrapper[];
     results: any;
-    
-    constructor(public util: UtilService, private httpClient: HttpClient){
+
+    constructor(public util: UtilService, private httpClient: HttpClient, private adminHomeService: AdminHomeComponentService){
 
     }
 
@@ -56,8 +57,42 @@ export class ViewShopCustomerOrderComponent implements OnInit {
                 }
             );
 
+        } else  if (this.viewId === 2) {
+
+            this.printCustomerOrderReport(this.cusOrder.id);
+
         }
     }
+
+
+    printCustomerOrderReport(id: number) {
+
+
+        let headers = new HttpHeaders();
+            headers = headers.set('accept','application/pdf');
+            headers = headers.set('responseType','blob');
+         
+            let configObj = Object.assign({'headers': headers, 'responseType': "blob"});
+      
+        let requestPaylod = {
+              'adminID': this.logonAdmin.userIn.admin.id,
+              'sessionID': this.logonAdmin.sessionID,
+              'orderIDs': [{'orderID': id}]
+        }
+
+        this.adminHomeService.printCustomerOrderReport(requestPaylod, configObj).subscribe(
+            response => {
+             
+              window.open(window.URL.createObjectURL(response));
+              
+            },
+            error => {
+              console.log('pdf document error', error);
+             
+            }
+          )
+    }
+
 
     onRemoveOrderClick(): void {
 
@@ -110,7 +145,5 @@ export class ViewShopCustomerOrderComponent implements OnInit {
         })
 
     }
-
-
 
 }

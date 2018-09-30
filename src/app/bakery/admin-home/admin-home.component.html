@@ -86,21 +86,21 @@
 
             <app-tabs-menu (onTabChange)="onTabChange($event)" [tabs]="tabs" [activeTab]="selectedTabIndex">
                 <app-tab-panel [panelId]="0">
-                    <h4>All customers' open (Unprocessed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print"></span></h4> <br>
+                    <h4>All customers' open (Unprocessed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print" title="Print all Unprocessed orders report" (click)="printCustomerOrderReport('open_orders')"></span></h4> <br>
                     <div class="loader" *ngIf="!orderRequestIsReady"></div>
                     <view-shop-customer-order (processOrderEvent)="processOrderEventHandler($event)" [logonAdmin]="logonAdmin" [cusOrder]="co" *ngFor="let co of openOrders"></view-shop-customer-order>
                     
-                    <div class="empty-list" *ngIf="openOrders.length <= 0">
+                    <div class="empty-list" *ngIf="openOrders.length <= 0 && orderRequestIsReady">
                         There are no unprocessed orders to display.
                     </div>
                 
                 </app-tab-panel>
                 <app-tab-panel [panelId]="1">
-                    <h4>All customers' closed (Processed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print"></span></h4><br>
+                    <h4>All customers' closed (Processed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print" title="Print all processed orders report" (click)="printCustomerOrderReport('closed_orders')"></span></h4><br>
                     <div class="loader" *ngIf="!orderRequestIsReady"></div>
                     <view-shop-customer-order (processOrderEvent)="processOrderEventHandler($event)" [logonAdmin]="logonAdmin" [cusOrder]="co" *ngFor="let co of closedOrders"></view-shop-customer-order>
                     
-                    <div class="empty-list" *ngIf="closedOrders.length <= 0">
+                    <div class="empty-list" *ngIf="closedOrders.length <= 0 && orderRequestIsReady">
                         There are no processed orders to display.
                     </div>
                 
