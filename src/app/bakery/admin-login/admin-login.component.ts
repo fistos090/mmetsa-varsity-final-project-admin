@@ -19,6 +19,7 @@ export class AdminLoginComponent implements OnInit {
   loginForm: FormGroup;
   showErrors = false;
   dropdownIsOpen = false;
+  loginProcessing = false;
   formErrors = {
     email: {
       required: 'Email is required field',
@@ -55,9 +56,11 @@ export class AdminLoginComponent implements OnInit {
     this.onSubmit();
     if (this.loginForm.valid) {
       // this.spinner.showSpinner();
+      this.loginProcessing = true;
       this.httpClient.post<AdminLogon>('/BAKERY/admin/login', this.loginForm.value).subscribe(
         response => {
           // this.spinner.hideSpinner();
+          this.loginProcessing = false;
           if (response) {
             if (response.status == 'FOUND') {
 
@@ -74,6 +77,7 @@ export class AdminLoginComponent implements OnInit {
         error => {
           // this.spinner.hideSpinner();
           console.log('************** >>>>>>', error);
+          this.loginProcessing = false;
         }
       );
 

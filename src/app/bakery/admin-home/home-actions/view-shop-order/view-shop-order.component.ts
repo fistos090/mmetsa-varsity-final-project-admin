@@ -20,6 +20,7 @@ export class ViewShopCustomerOrderComponent implements OnInit {
     panelOpenState = false;
     viewId: number = -1;
     spinnerIsShowing = false;
+    printProcessing = false;
     orderProducts: ProductWrapper[];
     results: any;
 
@@ -80,15 +81,16 @@ export class ViewShopCustomerOrderComponent implements OnInit {
               'orderIDs': [{'orderID': id}]
         }
 
+        this.printProcessing = true;
         this.adminHomeService.printCustomerOrderReport(requestPaylod, configObj).subscribe(
             response => {
              
               window.open(window.URL.createObjectURL(response));
-              
+              this.printProcessing = false;
             },
             error => {
               console.log('pdf document error', error);
-             
+              this.printProcessing = false;
             }
           )
     }

@@ -6,6 +6,7 @@
     <label [for]="data.name">{{data.label}}</label>
     <input
     autocomplete="off"
+    [attr.disabled]="disabled ? '' : null"
     [type]="data.type"
     [maxlength]="data.maxLength"
     [placeholder]="data.placeholder" 

@@ -48,15 +48,6 @@
         <add-product-form></add-product-form>
     </div>
 
-    <!-- Manage customer web home page products -->
-    <!-- <div *ngIf="isCHP" class="administration-area col-md-8">
-        <h4> <i class="fa fa-plus-circle"></i> Manage customer home page products</h4>
-        <hr style="margin-top: 0px">
-        <div>
-
-        </div>
-    </div> -->
-
     <div *ngIf="isAllShopProducts" class="administration-area col-md-8">
         <h4> <i class="fa fa-eye"></i> View all shop products</h4>
         <hr style="margin-top: 0px">
@@ -77,10 +68,11 @@
             <span style="float: right; margin-right: 15px;" class="fa fa-print" title="Print customers' login track report" (click)="printCustomerLoginTrackReport('open_orders')"></span>
         </h4>
         <hr style="margin-top: 0px">
-        <div>
-        {{shopCustomers | json}}
+        <div *ngIf="customersDataIsReady && shopCustomers.length > 0">
+            <app-customer-details [customer]="customer" *ngFor="let customer of shopCustomers"></app-customer-details>
         </div>
-        <button (click)="printCustomerLoginTrackReport()">Report</button>
+        <div class="loader" *ngIf="!customersDataIsReady && shopCustomers.length < 1"></div>
+        <br>
     </div>
 
     <div *ngIf="isAllOrders" class="administration-area col-md-8">
@@ -90,7 +82,15 @@
 
             <app-tabs-menu (onTabChange)="onTabChange($event)" [tabs]="tabs" [activeTab]="selectedTabIndex">
                 <app-tab-panel [panelId]="0">
-                    <h4>All customers' open (Unprocessed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print" title="Print all Unprocessed orders report" (click)="printCustomerOrderReport('open_orders')"></span></h4> <br>
+                    <h4>All customers' open (Unprocessed) orders 
+                        <span *ngIf="!printProcessing"
+                            style="float: right; margin-right: 15px;" class="fa fa-print" 
+                            title="Print all Unprocessed orders report" 
+                            (click)="printCustomerOrderReport('open_orders')">
+                        </span>
+
+                        <span *ngIf="printProcessing" class="loader" style="height: 25px; width: 25px;float: right;"></span>
+                    </h4> <br>
                     <div class="loader" *ngIf="!orderRequestIsReady"></div>
                     <view-shop-customer-order (processOrderEvent)="processOrderEventHandler($event)" [logonAdmin]="logonAdmin" [cusOrder]="co" *ngFor="let co of openOrders"></view-shop-customer-order>
                     
@@ -100,7 +100,14 @@
                 
                 </app-tab-panel>
                 <app-tab-panel [panelId]="1">
-                    <h4>All customers' closed (Processed) orders <span style="float: right; margin-right: 15px;" class="fa fa-print" title="Print all processed orders report" (click)="printCustomerOrderReport('closed_orders')"></span></h4><br>
+                    <h4>All customers' closed (Processed) orders 
+                        <span *ngIf="!printProcessing"
+                            style="float: right; margin-right: 15px;" class="fa fa-print" 
+                            title="Print all processed orders report" 
+                            (click)="printCustomerOrderReport('closed_orders')">
+                        </span>
+                        <span *ngIf="printProcessing" class="loader" style="height: 25px; width: 25px;float: right;"></span>
+                    </h4><br>
                     <div class="loader" *ngIf="!orderRequestIsReady"></div>
                     <view-shop-customer-order (processOrderEvent)="processOrderEventHandler($event)" [logonAdmin]="logonAdmin" [cusOrder]="co" *ngFor="let co of closedOrders"></view-shop-customer-order>
                     

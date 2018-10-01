@@ -15,9 +15,11 @@
                 <span (click)="processAction(viewId === 1 ? -1 : 1)" class="fa {{ viewId !== 1 ? 'fa-eye' : 'fa-eye-slash'}}" title="{{ viewId !== 1 ? 'View order products' : 'Hide order products'}}">
 
                 </span>
-                <span (click)="processAction(2)" class="fa fa-print" title="Print this order report"></span>
                 <span (click)="processAction(3)" *ngIf="cusOrder.orderStatus === 'OPEN'" class="fa fa-edit" title="Mark as processed"></span>
                 <span (click)="processAction(0)" *ngIf="cusOrder.orderStatus === 'CLOSED'" class="fa fa-trash-o" title="Delete this order"></span>
+                <span *ngIf="!printProcessing" (click)="processAction(2)" class="fa fa-print" title="Print this order report"></span>
+                <div *ngIf="printProcessing" class="loader-sm"></div>
+
             </span>
         </span>
     </div>

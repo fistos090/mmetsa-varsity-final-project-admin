@@ -10,7 +10,8 @@ import { InputField } from './input-field.model';
 export class InputFieldComponent implements OnInit, OnChanges {
 
   @Input() data: InputField;
-  @Input() showErrors: false;
+  @Input() showErrors = false;
+  @Input() disabled = false;
   @Input() matDatepicker: any;
   @Input() parentFormGroup: FormGroup;
   @Input() formControlErrorMessage: any

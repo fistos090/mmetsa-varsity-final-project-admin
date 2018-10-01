@@ -25,6 +25,7 @@ export class AddProductComponent implements OnInit {
     addProductForm: FormGroup;
     showErrors = false;
     isShowingAddForm = true;
+    loadImage = false;
     
     formErrors = {
         productName: {
@@ -115,6 +116,7 @@ export class AddProductComponent implements OnInit {
 
         fileReader.onloadstart = function (ev) {
             console.log('started', ev)
+            this.loadImage = true;
         }.bind(this)
 
         fileReader.onprogress = function (ev) {
@@ -127,11 +129,13 @@ export class AddProductComponent implements OnInit {
             if (this.addProductForm.controls['productImage'].valid) {
                 this.formControlErrorMessage['productImage'] = undefined;
             }
-            
+            this.loadImage = false;
 
         }.bind(this)
 
     }
+
+    addingProduct = false;
 
     onAddProductClick() {
         this.showErrors = true;
@@ -145,11 +149,13 @@ export class AddProductComponent implements OnInit {
                 'product': this.product
             }
 
+            this.addingProduct = true;
             this.httpClient.post('/BAKERY/loadNewProduct', requestData).subscribe(
                 response => {
 
                     this.isShowingAddForm = false;
                     this.updateDetails = false;
+                    this.addingProduct = false;
 
                     if (response['status'] == 'CREATED') {
                         this.image = undefined;
@@ -168,6 +174,7 @@ export class AddProductComponent implements OnInit {
                 error => {
                     // alert(error['message'])
                     console.log('*********', error);
+                    this.addingProduct = false;
                 }
             );
         }

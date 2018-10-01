@@ -24,6 +24,7 @@ import { ViewShopCustomerOrderComponent } from 'src/app/bakery/admin-home/home-a
 import { UtilService } from 'src/app/bakery/common/services/utility-service';
 import { TabsMenuComponent } from 'src/app/bakery/common/tabs-menu/tabs-menu.component';
 import { TabPanelComponent } from 'src/app/bakery/common/tabs-menu/tab-panel/tab-panel.component';
+import { CustomerDetailsComponent } from './bakery/admin-home/home-actions/customer-details/customer-details.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { TabPanelComponent } from 'src/app/bakery/common/tabs-menu/tab-panel/tab
     ViewShopProductComponent,
     ViewShopCustomerOrderComponent,
     TabsMenuComponent,
-    TabPanelComponent
+    TabPanelComponent,
+    CustomerDetailsComponent
   ],
   imports: [
     BrowserModule,

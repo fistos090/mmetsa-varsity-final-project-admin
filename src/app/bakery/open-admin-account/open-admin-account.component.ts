@@ -19,6 +19,8 @@ export class OpenAdminAccountComponent implements OnInit {
   image: any;
   showErrors = false;
   dropdownIsOpen = false;
+  registerProcessing = false;
+
   formErrors = {
     accountPhoto: {
       required: 'Please select a photo for your profile'
@@ -205,10 +207,13 @@ export class OpenAdminAccountComponent implements OnInit {
         'encodedAdminImage': 'this.image,lklklllklkl',
       })
 
+      this.registerProcessing = true;
       // this.spinner.showSpinner();
       this.httpClient.post('/BAKERY/admin/register/' + this.registerForm.get('ssacode').value, requestPayload).subscribe(
         response => {
+          this.registerProcessing = false;
           // this.spinner.hideSpinner();
+          alert(response['message']);
           if (response) {
             if (response['status'] == 'CREATED') {
 
@@ -218,7 +223,7 @@ export class OpenAdminAccountComponent implements OnInit {
             } else if (response['status'] == 'FAILED') {
 
             } else if (response['status'] == 'CONFLICT') {
-
+              this.router.navigate(['admin-login']);
             }
           }
 
@@ -227,6 +232,7 @@ export class OpenAdminAccountComponent implements OnInit {
         error => {
           // this.spinner.hideSpinner();
           console.log('************** >>>>>>',error);
+          this.registerProcessing = false;
         }
       );
 

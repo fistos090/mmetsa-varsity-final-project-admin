@@ -10,7 +10,8 @@ import { FormGroup } from '@angular/forms';
 export class DropdownListComponent implements OnInit {
 
   @Input() data: DropdownList;
-  @Input() showErrors: false;
+  @Input() showErrors = false;
+  @Input() disabled = false;
   @Input() parentFormGroup: FormGroup;
   @Input() formControlErrorMessage: any
 

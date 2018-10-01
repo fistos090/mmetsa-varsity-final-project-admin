@@ -19,11 +19,6 @@
         </div>
       </div>
       <hr style="margin-bottom: 0px">
-      <!-- <div class="image-sec">
-        <img [src]="image" alt="" height="128" width="150">
-        <input type="file" title="Select account picture" value="Select account picture" (change)="uploadImage($event)">
-      </div>
-      <hr style="margin-top: 0px"> -->
       <form [formGroup]="registerForm">
         <div class="row">
           <div class="col-md-12">
@@ -34,7 +29,8 @@
                     name: 'firstname',
                     maxLength: 30
                     }"
-              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+              [disabled]="registerProcessing" [showErrors]="showErrors" [parentFormGroup]="registerForm"
+              [formControlErrorMessage]="formControlErrorMessage">
             </app-input-field>
           </div>
         </div>
@@ -47,7 +43,8 @@
                     name: 'lastname',
                     maxLength: 40
                     }"
-              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+              [disabled]="registerProcessing" [showErrors]="showErrors" [parentFormGroup]="registerForm"
+              [formControlErrorMessage]="formControlErrorMessage">
             </app-input-field>
           </div>
         </div>
@@ -60,7 +57,8 @@
             name: 'email',
             maxLength: 40
             }"
-              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+              [disabled]="registerProcessing" [showErrors]="showErrors" [parentFormGroup]="registerForm"
+              [formControlErrorMessage]="formControlErrorMessage">
             </app-input-field>
           </div>
 
@@ -74,7 +72,8 @@
                         name: 'password',
                         maxLength: 50
                         }"
-              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+              [disabled]="registerProcessing" [showErrors]="showErrors" [parentFormGroup]="registerForm"
+              [formControlErrorMessage]="formControlErrorMessage">
             </app-input-field>
           </div>
           <div class="col-md-6">
@@ -85,7 +84,8 @@
                         name: 'confirmPassword',
                         maxLength: 50
                         }"
-              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+              [disabled]="registerProcessing" [showErrors]="showErrors" [parentFormGroup]="registerForm"
+              [formControlErrorMessage]="formControlErrorMessage">
             </app-input-field>
           </div>
         </div>
@@ -99,7 +99,8 @@
             name: 'ssacode',
             maxLength: 50
             }"
-              [showErrors]="showErrors" [parentFormGroup]="registerForm" [formControlErrorMessage]="formControlErrorMessage">
+              [disabled]="registerProcessing" [showErrors]="showErrors" [parentFormGroup]="registerForm"
+              [formControlErrorMessage]="formControlErrorMessage">
             </app-input-field>
           </div>
         </div>
@@ -107,8 +108,10 @@
         <br>
         <div class="row">
           <div class="col-md-12">
-            <button class="btn  btn-light" style="width: 100%; height: 45px;" (click)="onRegisterClick()"> <span class="fa fa-user-circle"></span>
-              Create account</button>
+            <button  [disabled]="registerProcessing" class="btn  btn-light" style="width: 100%; height: 45px;" (click)="onRegisterClick()">
+              <span *ngIf="!registerProcessing"> <span class="fa fa-user-circle"></span> Create account</span>
+              <div *ngIf="registerProcessing" class="loader" style="height: 25px; width: 25px;display: inline-block;"></div>
+            </button>
           </div>
         </div>
 

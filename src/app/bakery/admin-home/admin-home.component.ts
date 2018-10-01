@@ -31,6 +31,7 @@ export class AdminHomeComponent implements OnInit {
     isAllRegisteredCustomer = false;
 
     orderRequestIsReady = true;
+    printProcessing = false;
 
     products = [];
     formOpenningEvent = new Subject<number>();
@@ -51,9 +52,10 @@ export class AdminHomeComponent implements OnInit {
 
     openOrders: CustomerOrder[];
     closedOrders: CustomerOrder[];
-    shopCustomers: Customer[];
+    shopCustomers: Customer[] = [];
 
     ordersIds = [];
+    customersDataIsReady: boolean;
 
     constructor(private formBuilder: FormBuilder, private httpClient: HttpClient, private adminService: AdminService,
         private router: Router, private spinner: SpinnerService,private adminHomeService: AdminHomeComponentService) {
@@ -71,7 +73,7 @@ export class AdminHomeComponent implements OnInit {
 
     onTabChange(tabId: number): void {
        
-      }
+    }
 
     expandNavItem(id: string) {
         this.navItems.forEach(navItem => {
@@ -166,15 +168,19 @@ export class AdminHomeComponent implements OnInit {
 
                 break;
             case 'isAllRegisteredCustomer':
+            this.customersDataIsReady = false;
+            this.shopCustomers = [];
 
             this.httpClient.get<ProductWrapper>('/BAKERY/getAllRegisteredCustomers/'+this.logonAdmin.sessionID+'/'+this.logonAdmin.userIn.admin.id).subscribe(
                 response => {
+                    this.customersDataIsReady = true;
                     if ( response['status'] == 'FETCHED') {
                         this.shopCustomers = response['customers'];
                     }
                 },
                 error => {
                     console.log('************** >>>>>>', error);
+                    this.customersDataIsReady = true;
                 }
             );
 
@@ -225,7 +231,7 @@ export class AdminHomeComponent implements OnInit {
             this.ordersIds.push({
                 'orderID': order.id
             });
-        })
+        });
 
         let headers = new HttpHeaders();
             headers = headers.set('accept','application/pdf');
@@ -239,14 +245,17 @@ export class AdminHomeComponent implements OnInit {
               'orderIDs': this.ordersIds
         }
 
+        this.printProcessing = true;
         this.adminHomeService.printCustomerOrderReport(requestPaylod, configObj).subscribe(
             response => {
               this.ordersIds = [];
+              this.printProcessing = false;
               window.open(window.URL.createObjectURL(response));
               
             },
             error => {
               console.log('pdf document error', error);
+              this.printProcessing = false;
               this.ordersIds = [];
             }
           )
@@ -270,13 +279,13 @@ export class AdminHomeComponent implements OnInit {
             response => {
             
               window.open(window.URL.createObjectURL(response));
-              
+
             },
             error => {
               console.log('pdf document error', error);
 
             }
-          )
+        );
     }
 
 
