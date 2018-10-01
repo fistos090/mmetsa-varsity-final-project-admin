@@ -252,6 +252,32 @@ export class AdminHomeComponent implements OnInit {
           )
     }
 
+    printCustomerLoginTrackReport(){
+
+
+        let headers = new HttpHeaders();
+            headers = headers.set('accept','application/pdf');
+            headers = headers.set('responseType','blob');
+         
+            let configObj = Object.assign({'headers': headers, 'responseType': "blob"});
+      
+        let requestPaylod = {
+            'adminID': this.logonAdmin.userIn.admin.id,
+            'sessionID': this.logonAdmin.sessionID
+        }
+
+        this.httpClient.post('/BAKERY/printCustomerLoginTrackReport',requestPaylod, configObj).subscribe(
+            response => {
+            
+              window.open(window.URL.createObjectURL(response));
+              
+            },
+            error => {
+              console.log('pdf document error', error);
+
+            }
+          )
+    }
 
 
 }

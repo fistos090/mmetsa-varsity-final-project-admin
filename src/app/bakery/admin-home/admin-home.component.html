@@ -72,11 +72,15 @@
     </div>
 
     <div *ngIf="isAllRegisteredCustomer" class="administration-area col-md-8">
-        <h4> <i class="fa fa-plus-circle"></i> View all registered customers</h4>
+        <h4> 
+            <i class="fa fa-plus-circle"></i> View all registered customers 
+            <span style="float: right; margin-right: 15px;" class="fa fa-print" title="Print customers' login track report" (click)="printCustomerLoginTrackReport('open_orders')"></span>
+        </h4>
         <hr style="margin-top: 0px">
         <div>
         {{shopCustomers | json}}
         </div>
+        <button (click)="printCustomerLoginTrackReport()">Report</button>
     </div>
 
     <div *ngIf="isAllOrders" class="administration-area col-md-8">
