@@ -83,7 +83,7 @@
             <app-tabs-menu (onTabChange)="onTabChange($event)" [tabs]="tabs" [activeTab]="selectedTabIndex">
                 <app-tab-panel [panelId]="0">
                     <h4>All customers' open (Unprocessed) orders 
-                        <span *ngIf="!printProcessing"
+                        <span *ngIf="!printProcessing && openOrders.length > 0"
                             style="float: right; margin-right: 15px;" class="fa fa-print" 
                             title="Print all Unprocessed orders report" 
                             (click)="printCustomerOrderReport('open_orders')">
@@ -101,7 +101,7 @@
                 </app-tab-panel>
                 <app-tab-panel [panelId]="1">
                     <h4>All customers' closed (Processed) orders 
-                        <span *ngIf="!printProcessing"
+                        <span *ngIf="!printProcessing && closedOrders.length > 0"
                             style="float: right; margin-right: 15px;" class="fa fa-print" 
                             title="Print all processed orders report" 
                             (click)="printCustomerOrderReport('closed_orders')">

@@ -50,8 +50,8 @@ export class AdminHomeComponent implements OnInit {
         }),
     ];
 
-    openOrders: CustomerOrder[];
-    closedOrders: CustomerOrder[];
+    openOrders: CustomerOrder[] = [];
+    closedOrders: CustomerOrder[] = [];
     shopCustomers: Customer[] = [];
 
     ordersIds = [];
