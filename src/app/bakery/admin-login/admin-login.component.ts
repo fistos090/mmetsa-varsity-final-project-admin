@@ -60,14 +60,14 @@ export class AdminLoginComponent implements OnInit {
       this.httpClient.post<AdminLogon>('/BAKERY/admin/login', this.loginForm.value).subscribe(
         response => {
           // this.spinner.hideSpinner();
+          alert(response['message']);
           this.loginProcessing = false;
           if (response) {
             if (response.status == 'FOUND') {
 
               this.adminService.setLogonAdmin(response);
               this.router.navigate(['admin-home']);
-              alert(response['message']);
-
+             
             } else if (response.status == 'NOT_FOUND') {
               alert(response['message']);
             }
